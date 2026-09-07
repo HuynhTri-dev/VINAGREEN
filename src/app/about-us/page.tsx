@@ -1,33 +1,38 @@
 /**
  * @name page.tsx
- * @description About Us page focusing on visual storytelling with smart image placeholders and concise copy
+ * @description About Us page focusing on high-impact e-commerce storytelling, concise copy, and visual dominance.
  */
 
 "use client";
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Container,
   Button,
   Badge,
-  Card,
 } from "@/design-system";
 import {
   Navbar,
   Footer,
   Pebble3D,
-  ImagePlaceholder,
   ChatbotWidget,
+  WeAreTrustedBy,
+  WePartnerWith,
 } from "@/components";
 import {
-  Heart,
-  Target,
-  Users,
-  ShieldCheck,
-  CheckCircle2,
   ArrowRight,
   Sparkles,
+  Globe,
+  Leaf,
+  Target,
+  Compass,
+  CheckCircle2,
+  Quote,
+  Cpu,
+  Heart,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function AboutUsPage() {
@@ -35,170 +40,284 @@ export default function AboutUsPage() {
     <div className="flex flex-col min-h-screen bg-surface text-deep-ink">
       <Navbar />
 
-      <main className="flex-1 py-12 space-y-20">
+      <main className="flex-1 py-12 space-y-24">
         {/* =========================================================================
-            1. Hero: Concise Storytelling & Primary Visual Anchor
+            1. Hero: Dấu Chân Toàn Cầu. Khát Vọng Việt Nam.
            ========================================================================= */}
-        <section>
+        <section className="relative overflow-hidden pt-8">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              {/* Concise Text (Đã cắt giảm chữ thừa, tập trung vào trọng tâm) */}
-              <div className="lg:col-span-6 space-y-6">
-                <Badge variant="timber" size="md">
-                  Về Chúng Tôi • Câu Chuyện ViNar
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Column: Sharp, Punchy Text */}
+              <div className="space-y-8">
+                <Badge variant="timber" size="md" icon={<Compass className="w-4 h-4" />}>
+                  Câu Chuyện ViNar
                 </Badge>
 
-                <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
-                  Biến Phế Phẩm Khói Bụi Thành{" "}
-                  <span className="text-secondary-moss">Sinh Kế Bền Vững</span>
+                <h1 className="font-display text-5xl sm:text-6xl font-bold text-primary-forest leading-tight">
+                  Dấu Chân Toàn Cầu. <br />
+                  <span className="text-secondary-moss">Khát Vọng Việt Nam.</span>
                 </h1>
 
-                <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed font-normal">
-                  ViNar (VinaGreen) khởi nguồn từ khát vọng giải quyết nghịch cảnh kép của
-                  nông nghiệp Việt Nam: hàng triệu tấn rơm rạ, vỏ cà phê bị đốt
-                  bỏ gây ô nhiễm khói bụi, trong khi bà con Tây Nguyên và miền Tây
-                  phải gồng mình chống chọi hạn mặn khốc liệt.
-                </p>
+                <div className="text-lg text-on-surface-variant leading-relaxed space-y-4">
+                  <p>
+                    Từ các vườn ươm công nghệ tại <strong>Hàn Quốc, Đài Loan, Nhật Bản</strong>, chúng tôi chứng kiến sức mạnh của Nông nghiệp Thông minh. Nhưng nhìn về quê nhà là một nghịch cảnh xót xa:
+                  </p>
 
-                <div className="grid grid-cols-2 gap-4 pt-2">
-                  <div className="p-4 rounded-2xl bg-surface-container border border-surface-container-highest">
-                    <div className="text-xs font-mono font-bold uppercase text-outline">
-                      Sứ Mệnh
+                  <ul className="space-y-3 font-medium text-deep-ink">
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-red-500/80" />
+                      Hàng triệu tấn rơm rạ bị đốt, khói bụi bủa vây.
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-orange-500/80" />
+                      Nông dân ĐBSCL &amp; Tây Nguyên kiệt quệ vì hạn mặn.
+                    </li>
+                  </ul>
+
+                  <p className="pt-2 font-bold text-primary-forest text-xl">
+                    Đó là cú hích để ViNar ra đời.
+                  </p>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <div className="flex-1 p-5 rounded-2xl bg-surface-container border border-surface-container-highest flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary-forest/10 flex items-center justify-center shrink-0">
+                      <Globe className="w-6 h-6 text-primary-forest" />
                     </div>
-                    <div className="font-display font-bold text-lg text-primary-forest mt-1">
-                      Kinh Tế Tuần Hoàn
-                    </div>
-                    <div className="text-xs text-on-surface-variant mt-0.5">
-                      Net Zero 2050 cho nông nghiệp
+                    <div>
+                      <div className="text-xl font-display font-bold text-primary-forest">Học Hỏi</div>
+                      <div className="text-xs text-on-surface-variant">Tinh hoa công nghệ quốc tế</div>
                     </div>
                   </div>
-
-                  <div className="p-4 rounded-2xl bg-surface-container border border-surface-container-highest">
-                    <div className="text-xs font-mono font-bold uppercase text-outline">
-                      Cam Kết
+                  <div className="flex-1 p-5 rounded-2xl bg-surface-container border border-surface-container-highest flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-secondary-moss/10 flex items-center justify-center shrink-0">
+                      <Target className="w-6 h-6 text-secondary-moss" />
                     </div>
-                    <div className="font-display font-bold text-lg text-secondary-moss mt-1">
-                      100% Không Vi Nhựa
-                    </div>
-                    <div className="text-xs text-on-surface-variant mt-0.5">
-                      Bảo vệ cấu trúc đất mẹ dài lâu
+                    <div>
+                      <div className="text-xl font-display font-bold text-secondary-moss">Phụng Sự</div>
+                      <div className="text-xs text-on-surface-variant">Giải quyết nỗi đau quê nhà</div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Primary Visual Placeholder 1: Lab Origin Photo */}
-              <div className="lg:col-span-6">
-                <ImagePlaceholder
-                  aspectRatio="4/3"
-                  title="Khởi Nguồn Từ Phòng Thí Nghiệm Hóa Sinh"
-                  recommendedSubject="Ảnh nhóm R&D ViNar trong áo blouse trắng đang đo độ trương nở 450x của hạt AgriGel trong ống đong thủy tinh chia vạch, ánh sáng tự nhiên phòng lab sạch sẽ."
-                  tag="Ảnh Trọng Tâm 01: Nghiên Cứu Lab"
-                  lighting="Ánh sáng trắng phòng lab, độ nét cao cận cảnh hạt gel"
-                />
+              {/* Right Column: High-Impact Visuals */}
+              <div className="relative">
+                {/* Main Image */}
+                <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] border-4 border-white z-10">
+                  <Image
+                    src="/images/aboutus/chemical_lab.png"
+                    alt="Thành viên sáng lập ViNar tại phòng Lab công nghệ cao ở Hàn Quốc hoặc Đài Loan, ánh sáng neon hiện đại, tập trung nghiên cứu"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                {/* Floating Secondary Image (Context) */}
+                <div className="absolute -bottom-10 -left-10 w-2/3 aspect-square rounded-[2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] border-4 border-white z-20 hidden md:block">
+                  <Image
+                    src="/images/aboutus/han_man.png"
+                    alt="Nông dân Tây Nguyên đang ôm những mảng đất nứt nẻ do hạn mặn, ánh mắt lo âu nhưng đầy hi vọng khi cầm trên tay mầm cây xanh"
+                    fill
+                    sizes="33vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </div>
           </Container>
         </section>
 
         {/* =========================================================================
-            2. Visual Pillars: Đồng Hành Cùng Nông Dân & Khảo Nghiệm Đồng Ruộng
+            2. The Manifesto
            ========================================================================= */}
-        <section className="py-16 bg-surface-container-low border-y border-surface-container-highest">
-          <Container>
-            <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
-                Minh Chứng Người Thật Việc Thật
-              </span>
-              <h2 className="font-display text-3xl font-bold text-primary-forest">
-                Hình Ảnh Thực Địa Tại Các Vùng Trọng Điểm
+        <section className="relative w-full py-24 sm:py-32 overflow-hidden flex items-center justify-center text-center mt-12 mb-12">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/aboutus/netzero.png"
+              alt="Tầm nhìn phát triển bền vững Net Zero 2050 của ViNar"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0" />
+
+          <Container className="relative z-10">
+            <div className="max-w-4xl mx-auto space-y-8 text-white">
+              <Quote className="w-16 h-16 text-secondary-moss/80 mx-auto" />
+              <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl leading-tight">
+                &quot;Chúng tôi không chờ đợi sự thay đổi. <br className="hidden md:block" />Chúng tôi kiến tạo thay đổi.&quot;
               </h2>
+              <p className="text-lg sm:text-xl text-[#d1e5d3] max-w-2xl mx-auto font-medium leading-relaxed">
+                Mang lại sinh kế bền vững cho cộng đồng yếu thế và đưa Việt Nam tiến nhanh hơn trên hành trình chạm đích <strong className="text-white">Net Zero 2050</strong>.
+              </p>
+              <div className="pt-6">
+                <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-bold tracking-widest uppercase shadow-lg">
+                  — Tuyên Ngôn Thế Hệ Trẻ ViNar
+                </span>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* =========================================================================
+            3. Cách Mạng Vật Liệu Xanh
+           ========================================================================= */}
+        <section className="py-12">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Product/Impact Image */}
+              <div className="order-2 lg:order-1 relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/aboutus/nguon_vang.png"
+                  alt="Cận cảnh bàn tay đang nâng niu một khối AgriGel ngậm nước trong suốt như pha lê, phía dưới là lớp đất tơi xốp, ánh sáng mặt trời tự nhiên rọi vào rực rỡ"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+
+              {/* Text */}
+              <div className="order-1 lg:order-2 space-y-8">
+                <Badge variant="eco" size="md" icon={<Leaf className="w-4 h-4" />}>
+                  Cách Mạng Vật Liệu Xanh
+                </Badge>
+
+                <h2 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
+                  Rác Thải Là <br /> <span className="text-secondary-moss">Nguồn Vàng Sinh Học.</span>
+                </h2>
+
+                <p className="text-lg text-on-surface-variant">
+                  Tại ViNar, khái niệm &quot;rác thải&quot; bị xóa bỏ hoàn toàn. Chúng tôi tái sinh hàng triệu tấn phế phẩm nông nghiệp thành vật tư sinh học đột phá.
+                </p>
+
+                <div className="space-y-4">
+                  {[
+                    "100% Không Vi Nhựa & Hóa Chất",
+                    "Giữ Ẩm Tuyệt Đối, Bảo Tồn Nguồn Nước",
+                    "Tái Tạo Độ Phì Nhiêu Cho Đất Mẹ"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low border border-surface-container-highest">
+                      <div className="w-8 h-8 rounded-full bg-secondary-moss/20 flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-5 h-5 text-secondary-moss" />
+                      </div>
+                      <span className="font-bold text-deep-ink text-lg">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* =========================================================================
+            4. 3 Trụ Cột Chiến Lược
+           ========================================================================= */}
+        <section className="bg-surface-container-low py-20 border-y border-surface-container-highest">
+          <Container>
+            <div className="text-center mb-16">
+              <h2 className="font-display text-4xl font-bold text-primary-forest mb-4">
+                3 Trụ Cột Chuẩn Mực Toàn Cầu
+              </h2>
+              <p className="text-on-surface-variant text-lg">Hành động thực chất. Tác động bền vững.</p>
             </div>
 
-            {/* 3 Visual Placeholders for Field & Team Story */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Box 2: Đồng hành cùng nông dân */}
-              <ImagePlaceholder
-                aspectRatio="1/1"
-                title="Đồng Hành Trực Tiếp Cùng Nhà Vườn"
-                recommendedSubject="Ảnh chụp người sáng lập ViNar đang ngồi cùng nông dân sầu riêng tại Cai Lậy (Tiền Giang), hai tay bốc nắm đất ẩm tơi xốp kiểm tra rễ cây."
-                tag="Ảnh 02: Thực Địa Vườn Cây"
-                lighting="Ánh nắng ban mai xuyên qua tán lá sầu riêng"
+              <Pebble3D
+                variant="forest"
+                shape="egg"
+                title="Môi Trường"
+                subtitle="Khép kín tuần hoàn. Phục hồi tự nhiên. Cam kết hành động Net Zero 2050."
+                metric="Tuần Hoàn Trái Đất"
+                icon={<Sparkles className="w-6 h-6 text-[#bbefc0]" />}
               />
-
-              {/* Box 3: Hội đồng cố vấn & Đội ngũ */}
-              <ImagePlaceholder
-                aspectRatio="1/1"
-                title="Hội Đồng Cố Vấn Khoa Học Độc Lập"
-                recommendedSubject="Ảnh chụp tập thể ban cố vấn gồm các giáo sư/tiến sĩ nông hóa học tại trạm khảo nghiệm Tây Nguyên đang đối chiếu số liệu cảm biến đất."
-                tag="Ảnh 03: Hội Đồng Cố Vấn"
-                lighting="Chân dung chuyên gia ngoài trạm thực nghiệm"
+              <Pebble3D
+                variant="sprout"
+                shape="egg"
+                title="Cộng Đồng"
+                subtitle="Biến phế phẩm thành sinh kế. Tăng thu nhập trực tiếp cho bà con vùng cao."
+                metric="Nâng Tầm Lõi Sống"
+                icon={<Heart className="w-6 h-6 text-[#154423]" />}
               />
-
-              {/* Box 4: Xưởng sản xuất Pilot */}
-              <ImagePlaceholder
-                aspectRatio="1/1"
-                title="Xưởng Sản Xuất Bán Công Nghiệp Pilot"
-                recommendedSubject="Ảnh máy nén viên sinh thái và hệ thống bao gói sinh học tại xưởng pilot, công nhân mang bảo hộ đóng gói từng bao AgriGel 500g đạt chuẩn."
-                tag="Ảnh 04: Dây Chuyền Pilot"
-                lighting="Ánh sáng nhà xưởng gọn gàng, máy móc sạch sẽ"
+              <Pebble3D
+                variant="timber"
+                shape="egg"
+                title="Xã Hội"
+                subtitle="Tiên phong Deep-tech. Thay thế hoàn toàn vật liệu độc hại. For Good."
+                metric="Công Nghệ Vị Nhân Sinh"
+                icon={<ShieldCheck className="w-6 h-6 text-[#ffdcc6]" />}
               />
             </div>
           </Container>
         </section>
 
         {/* =========================================================================
-            3. Core Values: 3 Tactile 3D Blocks (Trình bày súc tích, không dàn trải)
+            5. Lợi Thế Cạnh Tranh (USP) & Thực Địa
            ========================================================================= */}
         <section>
           <Container>
-            <div className="max-w-2xl mx-auto text-center mb-12 space-y-2">
-              <h2 className="font-display text-3xl font-bold text-primary-forest">
-                Ba Trụ Cột Giá Trị Cốt Lõi
-              </h2>
-              <p className="text-sm text-on-surface-variant">
-                Nguyên tắc định hướng cho mọi quyết định nghiên cứu và thương mại hóa của ViNar.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+              <div className="space-y-6">
+                <Badge variant="timber" size="md">Lợi Thế Cạnh Tranh</Badge>
+                <h2 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
+                  Công Nghệ Là Công Cụ. <br />
+                  <span className="text-secondary-moss">Tâm Huyết Là Cốt Lõi.</span>
+                </h2>
+                <p className="text-lg text-on-surface-variant">
+                  Sự khác biệt lớn nhất của ViNar không chỉ nằm ở công nghệ sinh học thông minh, mà nằm ở khát vọng phụng sự của những người trẻ sát cánh cùng nông dân.
+                </p>
+              </div>
+              <div className="relative w-full aspect-[16/9] rounded-[2rem] overflow-hidden shadow-xl">
+                <Image
+                  src="/images/aboutus/tam_huyet.png"
+                  alt="Kỹ sư trẻ ViNar đang hướng dẫn và nắm tay một người nông dân lớn tuổi tại vườn sầu riêng, cả hai cùng nhìn về phía trước mỉm cười rạng rỡ, phía sau là vườn cây xanh tươi"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
 
+            {/* Sub-images of field work */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Pebble3D
-                variant="forest"
-                shape="egg"
-                title="Vì Môi Trường Khí Hậu"
-                subtitle="Chấm dứt đốt rơm rạ, giảm thiểu 680,000 tấn CO2e phát thải và bảo vệ nguồn nước ngầm."
-                metric="Net Zero"
-                icon={<Sparkles className="w-6 h-6 text-[#bbefc0]" />}
-              />
-
-              <Pebble3D
-                variant="sprout"
-                shape="egg"
-                title="Vì Sinh Kế Bà Con"
-                subtitle="Tăng thu nhập 2.8 - 4.2 triệu VNĐ/tháng từ phế phẩm và tiết kiệm 40% chi phí nước tưới."
-                metric="+30% Thu Nhập"
-                icon={<Heart className="w-6 h-6 text-[#154423]" />}
-              />
-
-              <Pebble3D
-                variant="timber"
-                shape="egg"
-                title="Tự Chủ Công Nghệ Việt"
-                subtitle="Làm chủ 100% công nghệ tinh chế polysaccharide bản địa, thay thế hóa chất nhập khẩu."
-                metric="100% Bản Địa"
-                icon={<ShieldCheck className="w-6 h-6 text-[#ffdcc6]" />}
-              />
+              <div className="relative aspect-square rounded-3xl overflow-hidden group">
+                <Image src="/images/aboutus/thucdia.png" alt="Cảnh thực địa tại vườn sầu riêng, chuyên gia đang bón AgriGel vào gốc cây, cận cảnh lớp đất được cải tạo" fill className="object-cover group-hover:scale-105 transition-all duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                  <h4 className="text-white font-bold text-lg">Đồng Hành Cùng Nhà Vườn</h4>
+                </div>
+              </div>
+              <div className="relative aspect-square rounded-3xl overflow-hidden group">
+                <Image src="/images/aboutus/covan.png" alt="Hội đồng cố vấn khoa học ViNar đang họp bàn tại phòng Lab, chỉ tay vào biểu đồ phân tích sinh học đất trên bảng tương tác" fill className="object-cover group-hover:scale-105 transition-all duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                  <h4 className="text-white font-bold text-lg">Bảo Chứng Khoa Học</h4>
+                </div>
+              </div>
+              <div className="relative aspect-square rounded-3xl overflow-hidden group">
+                <Image src="/images/aboutus/xuong_ban_cong.png" alt="Bên trong xưởng sản xuất pilot của ViNar, dây chuyền đang ép những viên AgriGel tự động, sạch sẽ và chuyên nghiệp, có logo ViNar trên bao bì" fill className="object-cover group-hover:scale-105 transition-all duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                  <h4 className="text-white font-bold text-lg">Sản Xuất Chuẩn Hóa</h4>
+                </div>
+              </div>
             </div>
 
             <div className="mt-14 text-center">
               <Link href="/journey">
                 <Button variant="primary" size="lg" icon={<ArrowRight className="w-5 h-5" />} iconPosition="right">
-                  Xem Lộ Trình Hành Trình Lịch Sử Của ViNar
+                  Khám Phá Hành Trình Của ViNar
                 </Button>
               </Link>
             </div>
           </Container>
         </section>
+
+        {/* =========================================================================
+            6 & 7. Ecosystem Components
+           ========================================================================= */}
+        <div className="space-y-0">
+          <WeAreTrustedBy />
+          <WePartnerWith />
+        </div>
       </main>
 
       <ChatbotWidget />
