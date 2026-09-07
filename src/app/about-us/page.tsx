@@ -191,7 +191,7 @@ export default function AboutUsPage() {
             </div>
 
             <div className="mt-14 text-center">
-              <Link href="/hanh-trinh">
+              <Link href="/journey">
                 <Button variant="primary" size="lg" icon={<ArrowRight className="w-5 h-5" />} iconPosition="right">
                   Xem Lộ Trình Hành Trình Lịch Sử Của ViNar
                 </Button>

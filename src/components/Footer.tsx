@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/san-pham"
+                  href="/product"
                   className="hover:text-primary-forest transition-colors flex items-center justify-between"
                 >
                   <span>Công cụ định lượng Hecta</span>

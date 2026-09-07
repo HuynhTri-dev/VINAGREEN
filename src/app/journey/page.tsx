@@ -87,10 +87,10 @@ export default function JourneyPage() {
                   />
                   {/* Station dots */}
                   {[
-                    { cx: 40,  cy: 240, label: "01", color: "#bbefc0" },
+                    { cx: 40, cy: 240, label: "01", color: "#bbefc0" },
                     { cx: 105, cy: 155, label: "02", color: "#c1ee7c" },
-                    { cx: 168, cy: 77,  label: "03", color: "#ffdcc6" },
-                    { cx: 258, cy: 41,  label: "04", color: "#bbefc0" },
+                    { cx: 168, cy: 77, label: "03", color: "#ffdcc6" },
+                    { cx: 258, cy: 41, label: "04", color: "#bbefc0" },
                   ].map((s) => (
                     <g key={s.label}>
                       <circle cx={s.cx} cy={s.cy} r="20" fill="#154423" stroke={s.color} strokeWidth="2.5" />
@@ -185,7 +185,7 @@ export default function JourneyPage() {
             </div>
 
             <div className="mt-14 text-center">
-              <Link href="/san-pham">
+              <Link href="/product">
                 <Button
                   variant="primary"
                   size="lg"

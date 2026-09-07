@@ -14,9 +14,9 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { label: "Trang Chủ", href: "/" },
-  { label: "Sản Phẩm Chuyên Sâu", href: "/san-pham" },
-  { label: "Về Chúng Tôi", href: "/ve-chung-toi" },
-  { label: "Hành Trình Khởi Nghiệp", href: "/hanh-trinh" },
+  { label: "Sản Phẩm Chuyên Sâu", href: "/product" },
+  { label: "Về Chúng Tôi", href: "/about-us" },
+  { label: "Hành Trình Khởi Nghiệp", href: "/journey" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -51,11 +51,10 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-semibold transition-all relative py-1 ${
-                    isActive
+                  className={`text-sm font-semibold transition-all relative py-1 ${isActive
                       ? "text-primary-forest dark:text-secondary-moss font-bold"
                       : "text-on-surface-variant hover:text-primary-forest"
-                  }`}
+                    }`}
                 >
                   {item.label}
                   {isActive && (
@@ -110,11 +109,10 @@ export const Navbar: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors ${
-                    isActive
+                  className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors ${isActive
                       ? "bg-primary-forest text-white"
                       : "text-deep-ink hover:bg-surface-container"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </Link>

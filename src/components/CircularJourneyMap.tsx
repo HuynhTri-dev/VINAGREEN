@@ -1,11 +1,13 @@
 /**
  * @name CircularJourneyMap.tsx
- * @description 7-Step Circular Economy Journey Map component matching real agricultural workflow
+ * @description Side-by-Side interactive map with percentage-based image hotspots.
+ *   Clicking a step region in the infographic updates the detail panel on the right.
+ *   Fully responsive: hotspot positions use %, adapts to any container width.
  */
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Users,
   Wheat,
@@ -15,8 +17,14 @@ import {
   Sprout,
   TrendingUp,
   CheckCircle2,
-  Recycle,
+  ChevronRight,
+  ChevronLeft,
+  Sparkles,
 } from "lucide-react";
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 export interface JourneyStep {
   stepNumber: number;
@@ -26,8 +34,24 @@ export interface JourneyStep {
   icon: React.ReactNode;
   badge: string;
   highlights: string[];
-  color: string;
+  /** Hotspot bounding box as % of the image container. */
+  hotspot: { top: number; left: number; width: number; height: number };
+  /** Tailwind color classes for the detail panel background + border. */
+  accentClass: string;
+  /** Optional image to display in the detail panel */
+  image?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Data — hotspot coordinates measured from the generated 1080×1080 infographic.
+//   Step 1 circle "1" is near top-centre  → top ~6%, left ~43%
+//   Step 2 circle "2" is upper-right       → top ~14%, left ~72%
+//   Step 3 circle "3" is mid-right         → top ~42%, left ~80%
+//   Step 4 circle "4" is lower-right       → top ~68%, left ~60%
+//   Step 5 circle "5" is lower-left        → top ~68%, left ~24%
+//   Step 6 circle "6" is mid-left          → top ~42%, left  ~4%
+//   Step 7 circle "7" is upper-left        → top ~14%, left ~6%
+// ---------------------------------------------------------------------------
 
 export const CIRCULAR_STEPS: JourneyStep[] = [
   {
@@ -35,44 +59,48 @@ export const CIRCULAR_STEPS: JourneyStep[] = [
     title: "Tạo Sinh Kế Bền Vững Cho Bà Con",
     subtitle: "Thu mua phụ phẩm vùng cao & ĐBSCL",
     description:
-      "Liên kết trực tiếp với các Hợp tác xã thu mua rơm rạ, trấu và vỏ cà phê, giải quyết việc làm và tăng thêm thu nhập cho nông dân.",
-    icon: <Users className="w-5 h-5 text-[#486d01]" />,
+      "Liên kết trực tiếp với các Hợp tác xã thu mua rơm rạ, trấu và vỏ cà phê, giải quyết việc làm và tăng thêm thu nhập ổn định cho nông hộ.",
+    icon: <Users className="w-6 h-6" />,
     badge: "Sinh Kế Nông Dân",
-    highlights: ["Tăng thu nhập 2.8 - 4.2 tr/tháng", "Bao tiêu phụ phẩm nông nghiệp"],
-    color: "border-amber-400 bg-amber-50/50 dark:bg-amber-950/20",
+    highlights: ["Tăng thu nhập 2.8 – 4.2 tr/tháng", "Bao tiêu phụ phẩm nông nghiệp"],
+    hotspot: { top: 2, left: 32, width: 35, height: 26 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 2,
     title: "Thu Gom Rơm Rạ & Vỏ Cà Phê",
-    subtitle: "Tránh đốt đồng gây ô nhiễm khói bụi",
+    subtitle: "Tránh đốt đồng — Zero Open Burning",
     description:
-      "Biến những tấn rơm rạ và vỏ trấu thường bị đốt bỏ gây ô nhiễm không khí thành nguồn nguyên liệu sinh học đầu vào giá trị cao.",
-    icon: <Wheat className="w-5 h-5 text-amber-700" />,
+      "Biến những tấn rơm rạ và vỏ cà phê thường bị đốt bỏ gây ô nhiễm không khí thành nguồn nguyên liệu sinh học đầu vào giá trị cao.",
+    icon: <Wheat className="w-6 h-6" />,
     badge: "Zero Open Burning",
-    highlights: ["Giảm 100% khói bụi đốt đồng", "Chuẩn bị nguyên liệu sạch"],
-    color: "border-orange-400 bg-orange-50/50 dark:bg-orange-950/20",
+    highlights: ["Giảm 100% khói bụi đốt đồng", "Tận dụng nguồn nguyên liệu sạch"],
+    hotspot: { top: 10, left: 63, width: 33, height: 30 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 3,
     title: "Sản Xuất Viên Nén Giữ Nước Sinh Học",
     subtitle: "Chiết xuất Cellulose & Lignin tinh khiết",
     description:
-      "Ứng dụng công nghệ sấy nén vi xốp chế tạo viên nén tích hợp sẵn chất dinh dưỡng và phân bón hòa tan nuôi dưỡng rễ cây.",
-    icon: <Factory className="w-5 h-5 text-emerald-700" />,
+      "Ứng dụng công nghệ sấy nén vi xốp chế tạo viên nén AgriGel™ tích hợp chất dinh dưỡng và phân bón hòa tan nuôi dưỡng rễ cây.",
+    icon: <Factory className="w-6 h-6" />,
     badge: "Công Nghệ Tinh Chế",
-    highlights: ["Cấu trúc tổ ong vi xốp", "Tích hợp sẵn dinh dưỡng N-P-K"],
-    color: "border-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20",
+    highlights: ["Cấu trúc tổ ong vi xốp nano", "Tích hợp sẵn dinh dưỡng N-P-K"],
+    hotspot: { top: 38, left: 67, width: 31, height: 26 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 4,
     title: "Hỗ Trợ Cây Trồng Chống Hạn Hán",
-    subtitle: "Viên nén ngậm nước & nhả ẩm từ từ",
+    subtitle: "Viên nén ngậm nước 450× & nhả ẩm từ từ",
     description:
       "Khi gặp nước, viên nén nở căng ngậm giữ nước gấp 450 lần khối lượng, nuôi dưỡng bộ rễ tơ sống sót và phát triển trong mùa khô hạn.",
-    icon: <Droplets className="w-5 h-5 text-blue-600" />,
+    icon: <Droplets className="w-6 h-6" />,
     badge: "Giữ Ẩm Rễ Tơ",
-    highlights: ["Khóa ẩm 21 ngày dứt tưới", "Giảm 40% chi phí nhiên liệu tưới"],
-    color: "border-blue-400 bg-blue-50/50 dark:bg-blue-950/20",
+    highlights: ["Khóa ẩm 21 ngày dứt tưới", "Giảm 40% chi phí nhiên liệu bơm"],
+    hotspot: { top: 64, left: 51, width: 36, height: 32 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 5,
@@ -80,126 +108,249 @@ export const CIRCULAR_STEPS: JourneyStep[] = [
     subtitle: "Tích hợp nền tảng IoT & Trợ lý AI",
     description:
       "Cảm biến đo độ ẩm đất kết hợp Trợ lý Nông Vụ AI giúp tự động hóa lịch tưới tiêu, tiết kiệm tối đa điện nước và công lao động.",
-    icon: <Cpu className="w-5 h-5 text-purple-600" />,
+    icon: <Cpu className="w-6 h-6" />,
     badge: "Nông Nghiệp 4.0",
     highlights: ["Giảm 50% công lao động tưới", "Cảnh báo độ ẩm qua điện thoại"],
-    color: "border-purple-400 bg-purple-50/50 dark:bg-purple-950/20",
+    hotspot: { top: 64, left: 14, width: 35, height: 33 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 6,
     title: "Phân Huỷ Sinh Học & Cải Tạo Đất",
     subtitle: "100% tự phân rã thành mùn hữu cơ",
     description:
-      "Viên nén không chứa hạt nhựa Polymer tổng hợp. Sau hậu vụ tự phân hủy 100% thành mùn đen tơi xốp, cải tạo tầng đất chai cứng.",
-    icon: <Sprout className="w-5 h-5 text-green-700" />,
+      "Viên nén không chứa hạt nhựa Polymer tổng hợp. Sau hậu vụ tự phân hủy 100% thành mùn đen tơi xốp, cải tạo tầng đất chai cứng bạc màu.",
+    icon: <Sprout className="w-6 h-6" />,
     badge: "Tái Sinh Đất Mẹ",
     highlights: ["Không để lại vi nhựa (0%)", "Tăng độ phì nhiêu & xốp đất"],
-    color: "border-green-400 bg-green-50/50 dark:bg-green-950/20",
+    hotspot: { top: 38, left: 2, width: 31, height: 28 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
   {
     stepNumber: 7,
     title: "Thu Hoạch Mùa Vụ & Vòng Tuần Hoàn",
-    subtitle: "Bao tiêu năng suất & Tiếp tục vòng tái sinh",
+    subtitle: "Bao tiêu năng suất & tiếp tục vòng tái sinh",
     description:
-      "Cây trồng cho năng suất vượt trội, gia tăng lợi nhuận cho nông dân. Doanh nghiệp tiếp tục trích lợi nhuận thu mua rơm rạ mới quay lại Bước 1.",
-    icon: <TrendingUp className="w-5 h-5 text-teal-700" />,
+      "Cây trồng cho năng suất vượt trội, gia tăng lợi nhuận cho nông dân. Doanh nghiệp tiếp tục trích lợi nhuận thu mua rơm rạ mới — quay lại Bước 1.",
+    icon: <TrendingUp className="w-6 h-6" />,
     badge: "Vòng Tuần Hoàn Khép Kín",
-    highlights: ["Năng suất tăng 15-25%", "Vòng sinh thái khép kín 100%"],
-    color: "border-teal-400 bg-teal-50/50 dark:bg-teal-950/20",
+    highlights: ["Năng suất tăng 15 – 25%", "Vòng sinh thái khép kín 100%"],
+    hotspot: { top: 10, left: 4, width: 32, height: 30 },
+    accentClass: "border-primary-forest/30 bg-primary-forest/5 dark:bg-primary-forest/10 text-deep-ink dark:text-white",
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 export const CircularJourneyMap: React.FC = () => {
   const [selectedStep, setSelectedStep] = useState<number>(1);
-  const activeStep = CIRCULAR_STEPS.find((s) => s.stepNumber === selectedStep) || CIRCULAR_STEPS[0];
+
+  const active = CIRCULAR_STEPS.find((s) => s.stepNumber === selectedStep)!;
+  const prev = () => setSelectedStep((n) => (n > 1 ? n - 1 : 7));
+  const next = () => setSelectedStep((n) => (n < 7 ? n + 1 : 1));
+
+  // Auto-play effect: cycles every 5 seconds, resets if user interacts
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSelectedStep((prevStep) => (prevStep < 7 ? prevStep + 1 : 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [selectedStep]);
 
   return (
-    <div className="w-full space-y-8">
-      {/* Banner Infographic Visual Header */}
-      <div className="relative rounded-3xl overflow-hidden border-2 border-surface-container-highest shadow-3d-surface bg-surface-container-lowest p-3">
-        <div className="relative rounded-2xl overflow-hidden">
-          <img
-            src="/images/circular_journey_map.jpg"
-            alt="Bản đồ hành trình nông nghiệp tuần hoàn 7 bước ViNar"
-            className="w-full h-auto max-h-[500px] object-cover"
-          />
-          <div className="absolute top-4 left-4 bg-primary-forest/90 text-white font-mono text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg flex items-center gap-2">
-            <Recycle className="w-4 h-4 text-secondary-container" />
-            <span>Bản Đồ Hành Trình Nông Nghiệp Tuần Hoàn 7 Bước</span>
-          </div>
-        </div>
-      </div>
+    <div className="w-full flex flex-col gap-6">
 
-      {/* Interactive 7 Step Card Selector */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-        {CIRCULAR_STEPS.map((step) => {
-          const isSelected = selectedStep === step.stepNumber;
-          return (
-            <button
-              key={step.stepNumber}
-              onClick={() => setSelectedStep(step.stepNumber)}
-              className={`p-3.5 rounded-2xl border transition-all duration-300 text-left flex flex-col justify-between space-y-2 cursor-pointer ${
-                isSelected
-                  ? "bg-primary-forest text-white border-primary-forest ring-4 ring-secondary-moss/30 shadow-lg scale-102"
-                  : "bg-surface-container-lowest border-surface-container-highest text-deep-ink hover:bg-surface-container"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span
-                  className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-extrabold ${
-                    isSelected
-                      ? "bg-secondary-container text-on-secondary-container"
-                      : "bg-surface-container-high text-primary-forest"
-                  }`}
+      {/* ── Side-by-side grid ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+        {/* ── LEFT: infographic + hotspot overlay ───────────────────────── */}
+        <div className="lg:col-span-7">
+          {/*
+           * HOTSPOT TECHNIQUE:
+           * The wrapper is position:relative and overflow:hidden.
+           * Each <button> is position:absolute with top/left as percentage
+           * so it scales proportionally with the image on every screen size.
+           * The image uses object-contain inside a fixed aspect-ratio box
+           * (aspect-[1/1]) so the coordinate mapping is stable.
+           */}
+          <div className="rounded-3xl overflow-hidden border-2 border-surface-container-highest shadow-3d-surface bg-surface-container-lowest p-3">
+            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-surface-container">
+
+              {/* Infographic image */}
+              <img
+                src="/images/circular_economy.jpg"
+                alt="Bản đồ hành trình nông nghiệp tuần hoàn 7 bước ViNar"
+                className="w-full h-full object-contain select-none"
+                draggable={false}
+              />
+
+              {/* Hotspot buttons — percentage-positioned */}
+              {CIRCULAR_STEPS.map((step) => {
+                const isActive = selectedStep === step.stepNumber;
+                return (
+                  <button
+                    key={step.stepNumber}
+                    onClick={() => setSelectedStep(step.stepNumber)}
+                    title={step.title}
+                    style={{
+                      position: "absolute",
+                      top: `${step.hotspot.top}%`,
+                      left: `${step.hotspot.left}%`,
+                      width: `${step.hotspot.width}%`,
+                      height: `${step.hotspot.height}%`,
+                    }}
+                    className={[
+                      "rounded-3xl cursor-pointer",
+                      "transition-all duration-300",
+                      "focus:outline-none focus-visible:ring-4 focus-visible:ring-secondary-moss",
+                      // Visible border on hover, highly visible when active
+                      isActive
+                        ? "border-[1px] border-secondary-moss shadow-lg shadow-secondary-moss/20 z-10 scale-[1.02]"
+                        : "border-2 border-transparent hover:border-white/60 hover:bg-white/10 hover:shadow-md hover:z-10",
+                    ].join(" ")}
+                  >
+                    {/* Number label — visually hidden for screen readers */}
+                    <span className="sr-only" aria-label={`Bước ${step.stepNumber}`}>
+                      {step.stepNumber}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {/* Tooltip hint badge */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-primary-forest/80 text-white text-[11px] font-mono font-bold px-3 py-1.5 rounded-full backdrop-blur-sm shadow pointer-events-none whitespace-nowrap">
+                Bấm vào số ❶ – ❼ để xem chi tiết
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile compact stepper — shown only below lg */}
+          <div className="mt-4 grid grid-cols-7 gap-1.5 lg:hidden">
+            {CIRCULAR_STEPS.map((step) => {
+              const isActive = selectedStep === step.stepNumber;
+              return (
+                <button
+                  key={step.stepNumber}
+                  onClick={() => setSelectedStep(step.stepNumber)}
+                  className={[
+                    "h-10 rounded-xl font-mono text-xs font-extrabold transition-all cursor-pointer",
+                    "flex items-center justify-center",
+                    isActive
+                      ? "bg-primary-forest text-white ring-2 ring-secondary-moss scale-105"
+                      : "bg-surface-container text-deep-ink hover:bg-surface-container-high",
+                  ].join(" ")}
                 >
                   0{step.stepNumber}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── RIGHT: Dynamic Island detail panel (Equal Height Layout) ──────── */}
+        <div className="lg:col-span-5 flex flex-col h-full">
+          <div
+            key={`detail-${active.stepNumber}`}
+            className="flex-1 flex flex-col justify-between rounded-3xl border-2 border-surface-container-highest bg-surface-container-lowest p-5 sm:p-6 shadow-3d-surface text-deep-ink transition-all duration-500 animate-fade-slide-up relative overflow-hidden h-full"
+          >
+            {/* Top Light Ambient Glow */}
+            <div className="absolute -top-16 -right-16 w-36 h-36 bg-secondary-moss/15 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Fixed Header Section */}
+            <div className="space-y-3 shrink-0">
+              {/* Top Capsule Status Bar */}
+              <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-surface-container-highest">
+                <div className="flex items-center gap-2 bg-surface-container px-3 py-1 rounded-full border border-surface-container-highest">
+                  <span className="w-2 h-2 rounded-full bg-secondary-moss animate-pulse shadow-[0_0_8px_#52b788]" />
+                  <span className="font-mono text-xs font-bold text-primary-forest tracking-wider uppercase">
+                    STEP 0{active.stepNumber} <span className="text-outline">/ 07</span>
+                  </span>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-primary-forest/10 text-primary-forest border border-primary-forest/20 font-mono font-bold text-xs tracking-wide shadow-xs">
+                  {active.badge}
                 </span>
-                <div className={isSelected ? "text-secondary-container" : "text-primary-forest"}>
-                  {step.icon}
+              </div>
+
+              {/* Title & Icon Header */}
+              <div className="flex items-center gap-3 justify-between">
+                <h3 className="font-display font-bold text-lg sm:text-xl text-primary-forest leading-snug tracking-tight">
+                  {active.title}
+                </h3>
+                <div className="p-2.5 rounded-2xl bg-surface-container border border-surface-container-highest text-primary-forest shrink-0 shadow-sm">
+                  {active.icon}
                 </div>
               </div>
-              <div className="font-display font-bold text-xs line-clamp-2 leading-snug">
-                {step.title}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Selected Step Detail Panel */}
-      <div className={`p-6 sm:p-8 rounded-3xl border-2 shadow-xl ${activeStep.color} transition-all duration-300`}>
-        <div className="flex flex-col md:flex-row items-start justify-between gap-6">
-          <div className="space-y-3 max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-primary-forest text-white font-mono text-xs font-bold">
-                BƯỚC 0{activeStep.stepNumber}
-              </span>
-              <span className="px-3 py-1 rounded-full bg-surface-container-highest text-primary-forest font-bold text-xs uppercase">
-                {activeStep.badge}
-              </span>
             </div>
-            <h3 className="font-display font-bold text-xl sm:text-2xl text-primary-forest">
-              {activeStep.title}
-            </h3>
-            <p className="text-xs font-semibold text-secondary-moss uppercase tracking-wider">
-              {activeStep.subtitle}
-            </p>
-            <p className="text-sm text-on-surface-variant leading-relaxed">
-              {activeStep.description}
-            </p>
-          </div>
 
-          {/* Highlights checklist */}
-          <div className="w-full md:w-72 shrink-0 p-5 rounded-2xl bg-surface-container-lowest border border-surface-container-highest shadow-xs space-y-3">
-            <div className="text-xs font-mono font-bold uppercase text-outline">
-              Điểm nổi bật:
-            </div>
-            {activeStep.highlights.map((h, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-primary-forest">
-                <CheckCircle2 className="w-4 h-4 text-secondary-moss shrink-0" />
-                <span>{h}</span>
+            {/* Scrollable Middle Content Section */}
+            <div className="flex-1 overflow-y-auto my-3 pr-1 space-y-3.5 scrollbar-thin scrollbar-thumb-surface-container-highest">
+              <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                {active.description}
+              </p>
+
+              {/* Dynamic Image / Placeholder Frame */}
+              {active.image ? (
+                <div className="w-full rounded-2xl overflow-hidden border border-surface-container-highest shadow-md">
+                  <img
+                    src={active.image}
+                    alt={active.title}
+                    className="w-full h-auto object-cover aspect-video"
+                  />
+                </div>
+              ) : (
+                <div className="w-full rounded-2xl border border-dashed border-surface-container-highest bg-surface-container/40 flex items-center justify-center p-4 text-xs font-mono text-outline italic aspect-video">
+                  [Chỗ để ảnh minh họa cho bước {active.stepNumber}]
+                </div>
+              )}
+
+              {/* Live Activity Highlights Widget */}
+              <div className="p-3.5 rounded-2xl bg-surface-container/60 border border-surface-container-highest space-y-2 shadow-xs">
+                {active.highlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-2 text-xs font-semibold text-primary-forest">
+                    <CheckCircle2 className="w-4 h-4 text-secondary-moss shrink-0 mt-0.5" />
+                    {h}
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Fixed Bottom Capsule Navigation */}
+            <div className="pt-3 border-t border-surface-container-highest flex items-center justify-between gap-2 shrink-0">
+              <button
+                onClick={prev}
+                className="px-3.5 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-surface-container-highest text-xs font-bold text-deep-ink transition-all flex items-center gap-1 cursor-pointer shadow-xs active:scale-95"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Quay lại
+              </button>
+
+              {/* iOS Segmented Dots */}
+              <div className="flex gap-1.5 items-center">
+                {CIRCULAR_STEPS.map((s) => (
+                  <button
+                    key={s.stepNumber}
+                    onClick={() => setSelectedStep(s.stepNumber)}
+                    className={[
+                      "rounded-full transition-all duration-300 cursor-pointer",
+                      s.stepNumber === active.stepNumber
+                        ? "w-4 h-2 bg-primary-forest shadow-sm"
+                        : "w-2 h-2 bg-primary-forest/25 hover:bg-primary-forest/50",
+                    ].join(" ")}
+                    aria-label={`Bước ${s.stepNumber}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={next}
+                className="px-3.5 py-2 rounded-full bg-primary-forest hover:bg-primary-forest/90 text-white font-mono text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-md shadow-primary-forest/20 active:scale-95"
+              >
+                {active.stepNumber === 7 ? "Về Bước 01" : "Tiếp theo"}
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

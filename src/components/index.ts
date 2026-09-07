@@ -12,3 +12,7 @@ export * from "./ChatbotWidget";
 export * from "./Navbar";
 export * from "./Footer";
 export * from "./CircularJourneyMap";
+export * from "./OurAwards";
+export * from "./WeAreTrustedBy";
+export * from "./WePartnerWith";
+

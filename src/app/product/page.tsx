@@ -60,32 +60,35 @@ export default function ProductsPage() {
           <Container>
             <div className="text-center max-w-3xl mx-auto space-y-4">
               <Badge variant="eco" size="md">
-                Danh Mục Giải Pháp Sinh Học Chuyên Sâu
+                Chỉ Số Kiểm Chứng Thực Địa
               </Badge>
               <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
-                Vật Liệu Giữ Ẩm &amp; Màng Bảo Vệ Rễ Tơ
+                Giải Pháp Sinh Học Chuyên Sâu ViNar
               </h1>
-              <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed">
-                Được phát triển từ nền tảng hóa sinh hữu cơ, AgriGel™ và BioBandage™
-                thay thế triệt để các hóa chất ngậm nước tổng hợp nhập khẩu, mang
-                lại giải pháp chống hạn mặn bền vững cho đất mẹ.
+              <p className="text-base sm:text-lg text-on-surface-variant leading-relaxed font-semibold">
+                Số liệu kiểm chứng lab TRL 6 &amp; khảo nghiệm thực tế trên các vùng canh tác chống hạn mặn.
               </p>
             </div>
 
-            {/* Product Duos 3D Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-14">
+            {/* Product Duos 3D Cards — Metric Focused */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
               <Pebble3D
                 variant="forest"
                 shape="egg"
                 title="AgriGel™ Viên Nén Giữ Ẩm Sinh Học"
-                subtitle="Cấu trúc tổ ong vi xốp hấp thu nước tức thì và nhả chậm 15 – 21 ngày cho rễ cây hấp thụ. Tự phân rã 100% thành mùn hữu cơ sau 6 - 8 tháng."
                 metric="450× Ngậm Nước"
                 icon={<Droplets className="w-6 h-6 text-[#bbefc0]" />}
               >
-                <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-                  <span className="px-2.5 py-1 rounded-full bg-white/20">Không vi nhựa</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/20">TRL 6 Lab</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/20">Bảo vệ rễ 21 ngày</span>
+                <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    Giữ ẩm rễ 21 ngày
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    0% Vi nhựa (Tự phân hủy)
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    TRL 6 Kiểm định Lab
+                  </span>
                 </div>
               </Pebble3D>
 
@@ -93,13 +96,19 @@ export default function ProductsPage() {
                 variant="timber"
                 shape="egg"
                 title="BioBandage™ Màng Bọc Rễ Kháng Mặn"
-                subtitle="Màng bọc sinh học bao phủ rễ tơ, ngăn chặn 88.4% sự xâm nhập của ion Na⁺ và Cl⁻ trong nước mặn trên 3‰, đồng thời kháng nấm bệnh Phytophthora."
-                metric="Khóa Mặn &gt;3‰"
+                metric="Khóa Mặn >3‰"
                 icon={<ShieldAlert className="w-6 h-6 text-[#ffdcc6]" />}
               >
-                <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold">
-                  <span className="px-2.5 py-1 rounded-full bg-white/20">Bảo vệ rễ tơ 90-120 ngày</span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/20">Đất phù sa ĐBSCL</span>
+                <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    Khóa 88.4% Ion Na⁺ &amp; Cl⁻
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    Bảo vệ rễ tơ 90–120 ngày
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                    Phù hợp ĐBSCL
+                  </span>
                 </div>
               </Pebble3D>
             </div>
@@ -107,56 +116,65 @@ export default function ProductsPage() {
         </section>
 
         {/* =========================================================================
-            2. Capillary Action Mechanism Diagram
+            2. Key Performance Metrics (Số Liệu Kiểm Chứng)
            ========================================================================= */}
         <section className="py-14 bg-surface-container-low border-y border-surface-container-highest">
           <Container>
-            <div className="max-w-3xl mb-10 space-y-2">
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
-                Cơ Chế Mao Dẫn Vi Mô (Capillary Cycle)
+                Chỉ Số Hiệu Năng Vượt Trội
               </span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-forest">
-                Cách Thức AgriGel Hoạt Động Quanh Vùng Rễ
+                4 Số Liệu Trọng Yếu Khảo Nghiệm Thực Địa
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card tier="floating" rounded="lg" className="p-6 space-y-3 shadow-3d-surface">
-                <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center font-mono font-bold text-primary-forest">
-                  01
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card tier="floating" rounded="lg" className="p-6 text-center space-y-2 shadow-3d-surface">
+                <div className="font-display font-extrabold text-4xl text-primary-forest">
+                  450×
                 </div>
-                <h4 className="font-display font-bold text-lg text-primary-forest">
-                  Viên Nén Khô Ban Đầu
-                </h4>
-                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                  Cấu trúc polysaccharide đậm đặc ở trạng thái ngủ đông, dễ dàng
-                  bảo quản trong bao bì sinh thái lên đến 24 tháng mà không giảm chất lượng.
+                <div className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
+                  Sức Ngậm Nước
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Tích trữ lượng nước gấp 450 lần khối lượng khô ban đầu.
                 </p>
               </Card>
 
-              <Card tier="floating" rounded="lg" className="p-6 space-y-3 shadow-3d-surface">
-                <div className="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center font-mono font-bold text-on-secondary-container">
-                  02
+              <Card tier="floating" rounded="lg" className="p-6 text-center space-y-2 shadow-3d-surface">
+                <div className="font-display font-extrabold text-4xl text-primary-forest">
+                  88.4%
                 </div>
-                <h4 className="font-display font-bold text-lg text-primary-forest">
-                  &lt; 3 Phút Trương Nở Cực Hạn
-                </h4>
-                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                  Khi gặp nước tưới hoặc sương đêm, hạt nén lập tức hút căng nước
-                  và khóa giữ chất dinh dưỡng phân bón hòa tan không bị rửa trôi.
+                <div className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
+                  Khóa Ion Mặn
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Ngăn chặn sự xâm nhập của muối Na⁺ &amp; Cl⁻ gây cháy rễ.
                 </p>
               </Card>
 
-              <Card tier="floating" rounded="lg" className="p-6 space-y-3 shadow-3d-surface">
-                <div className="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center font-mono font-bold text-primary-forest">
-                  03
+              <Card tier="floating" rounded="lg" className="p-6 text-center space-y-2 shadow-3d-surface">
+                <div className="font-display font-extrabold text-4xl text-primary-forest">
+                  21 Ngày
                 </div>
-                <h4 className="font-display font-bold text-lg text-primary-forest">
-                  Nhả Chậm 15 – 21 Ngày
-                </h4>
-                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
-                  Cung cấp độ ẩm thẩm thấu ngược theo áp suất rễ cây, duy trì sức
-                  sống cho lá non và nuôi trái lớn đều ngay cả khi đứt nước tưới 3 tuần.
+                <div className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
+                  Khóa Ẩm Dứt Tưới
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Duy trì độ ẩm rễ cây ngay cả khi ngắt tưới 3 tuần liên tục.
+                </p>
+              </Card>
+
+              <Card tier="floating" rounded="lg" className="p-6 text-center space-y-2 shadow-3d-surface">
+                <div className="font-display font-extrabold text-4xl text-primary-forest">
+                  40%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-secondary-moss font-mono">
+                  Tiết Kiệm Chi Phí
+                </div>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  Giảm 40% nhiên liệu chạy máy bơm và công lao động tưới.
                 </p>
               </Card>
             </div>
@@ -207,11 +225,10 @@ export default function ProductsPage() {
                           key={crop.id}
                           type="button"
                           onClick={() => setCropType(crop.id as any)}
-                          className={`p-3 rounded-xl text-xs font-bold text-left border transition-all cursor-pointer ${
-                            cropType === crop.id
-                              ? "bg-primary-forest text-white border-primary-forest shadow-sm"
-                              : "bg-surface-container text-deep-ink border-surface-container-highest hover:bg-surface-container-high"
-                          }`}
+                          className={`p-3 rounded-xl text-xs font-bold text-left border transition-all cursor-pointer ${cropType === crop.id
+                            ? "bg-primary-forest text-white border-primary-forest shadow-sm"
+                            : "bg-surface-container text-deep-ink border-surface-container-highest hover:bg-surface-container-high"
+                            }`}
                         >
                           {crop.label}
                         </button>

@@ -1,24 +1,41 @@
 /**
  * @name ChatbotWidget.tsx
- * @description Custom Text-First AI Chatbot Widget tailored for farmers and B2B partners
+ * @description Lightweight REST + SSE Streaming AI Chatbot Widget for VINAGREEN.
+ *   - Real-time SSE token-by-token streaming (typewriter effect).
+ *   - Rich Markdown rendering (tables, bold, italic, lists, blockquotes) via MarkdownRenderer.
+ *   - 0 idle cost (No persistent WebSocket audio sessions).
+ *   - Interactive dosage cards & quick suggestion chips.
  */
 
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   MessageSquare,
   X,
   Send,
   Bot,
   PhoneCall,
-  Sparkles,
-  Calculator,
-  User,
-  ExternalLink,
   ChevronDown,
 } from "lucide-react";
 import { Button } from "@/design-system";
+import { MarkdownRenderer } from "./MarkdownRenderer";
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const QUICK_SUGGESTION_CHIPS = [
+  { label: "🌱 Liều lượng Sầu riêng", prompt: "Tính liều lượng AgriGel cho 1 hecta sầu riêng" },
+  { label: "☕ Liều lượng Cà phê", prompt: "Tư vấn giữ ẩm cho cây cà phê đất đỏ bazan" },
+  { label: "💧 Chống mặn BioBandage", prompt: "BioBandage có chịu được nước mặn 3‰ không?" },
+  { label: "📦 Nhận mẫu thử miễn phí", prompt: "Tôi muốn đăng ký nhận gói mẫu thử AgriGel" },
+  { label: "📞 Gặp kỹ sư nông học", prompt: "Cho tôi số điện thoại chuyên viên phụ trách vùng" },
+];
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 interface Message {
   id: string;
@@ -34,13 +51,9 @@ interface Message {
   };
 }
 
-const QUICK_SUGGESTION_CHIPS = [
-  { label: "🌱 Liều lượng Sầu riêng", prompt: "Tính liều lượng AgriGel cho 1 hecta sầu riêng" },
-  { label: "☕ Liều lượng Cà phê", prompt: "Tư vấn giữ ẩm cho cây cà phê đất đỏ bazan" },
-  { label: "💧 Chống mặn BioBandage", prompt: "BioBandage có chịu được nước mặn 3‰ không?" },
-  { label: "📦 Nhận mẫu thử miễn phí", prompt: "Tôi muốn đăng ký nhận gói mẫu thử AgriGel" },
-  { label: "📞 Gặp kỹ sư nông học", prompt: "Cho tôi số điện thoại chuyên viên phụ trách vùng" },
-];
+// ---------------------------------------------------------------------------
+// Main Component
+// ---------------------------------------------------------------------------
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,79 +66,155 @@ export const ChatbotWidget: React.FC = () => {
       timestamp: "Vừa xong",
     },
   ]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isAgentTyping, setIsAgentTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  // ---- Helper: Check if bot text should include dosage card ----------------
 
-  const handleSendMessage = (textToSend?: string) => {
-    const text = textToSend || inputMessage;
-    if (!text.trim()) return;
+  const checkDosageCard = (text: string) => {
+    const lower = text.toLowerCase();
+    if (lower.includes("sầu riêng") && (lower.includes("liều") || lower.includes("kg") || lower.includes("hecta"))) {
+      return {
+        isDosageCard: true,
+        dosageData: {
+          crop: "Sầu riêng kinh doanh",
+          area: 1,
+          kgNeeded: "45 – 50 kg AgriGel",
+          waterSaved: "40% – 42%",
+        },
+      };
+    }
+    if (lower.includes("cà phê") && (lower.includes("liều") || lower.includes("kg") || lower.includes("hecta"))) {
+      return {
+        isDosageCard: true,
+        dosageData: {
+          crop: "Cà phê vối Tây Nguyên",
+          area: 1,
+          kgNeeded: "40 – 45 kg AgriGel",
+          waterSaved: "38% – 41%",
+        },
+      };
+    }
+    return {};
+  };
 
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      sender: "user",
-      text: text,
-      timestamp: "Vừa xong",
-    };
+  // ---- Send Message Handler (SSE Streaming) -------------------------------
 
-    setMessages((prev) => [...prev, userMsg]);
-    if (!textToSend) setInputMessage("");
-    setIsTyping(true);
+  const handleSendMessage = useCallback(
+    async (textToSend?: string) => {
+      const text = (textToSend ?? inputMessage).trim();
+      if (!text || isAgentTyping) return;
 
-    // Simulated Smart Response based on user input
-    setTimeout(() => {
-      let botReply: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: "bot",
-        text: "Cảm ơn bà con đã liên hệ. Hệ thống đang phân tích thông tin thổ nhưỡng theo vị trí canh tác của quý khách.",
+      const userMsgId = Date.now().toString();
+      const botMsgId = (Date.now() + 1).toString();
+
+      const userMsg: Message = {
+        id: userMsgId,
+        sender: "user",
+        text,
         timestamp: "Vừa xong",
       };
 
-      const lower = text.toLowerCase();
-      if (lower.includes("sầu riêng") || lower.includes("liều lượng") || lower.includes("cà phê")) {
-        botReply = {
-          id: (Date.now() + 1).toString(),
+      // Add user message & empty bot placeholder for streaming
+      const updatedMessages = [...messages, userMsg];
+      setMessages((prev) => [
+        ...prev,
+        userMsg,
+        {
+          id: botMsgId,
           sender: "bot",
-          text: "Dưới đây là khuyến nghị định lượng chuẩn thực địa từ phòng thí nghiệm ViNar:",
+          text: "",
           timestamp: "Vừa xong",
-          isDosageCard: true,
-          dosageData: {
-            crop: lower.includes("sầu riêng") ? "Sầu riêng kinh doanh" : "Cà phê vối Tây Nguyên",
-            area: 1,
-            kgNeeded: "45 – 50 kg AgriGel",
-            waterSaved: "40% – 42% lượng nước tưới",
-          },
-        };
-      } else if (lower.includes("mẫu thử") || lower.includes("đăng ký")) {
-        botReply = {
-          id: (Date.now() + 1).toString(),
-          sender: "bot",
-          text: "ViNar đang cấp phát gói dùng thử AgriGel 500g hoàn toàn miễn phí cho nhà vườn tại Gia Lai, Đắk Lắk, Tiền Giang và Bến Tre. Vui lòng để lại Số điện thoại hoặc bấm nút 'Đăng Ký Nhận Mẫu' ngay dưới trang chủ, kỹ sư sẽ gọi hỗ trợ trong 24 giờ!",
-          timestamp: "Vừa xong",
-        };
-      } else if (lower.includes("kỹ sư") || lower.includes("số điện thoại") || lower.includes("gặp")) {
-        botReply = {
-          id: (Date.now() + 1).toString(),
-          sender: "bot",
-          text: "Bà con có thể liên hệ trực tiếp Tổng đài Kỹ thuật Nông học ViNar qua số miễn cước 1800 6828 (8:00 - 18:00 hàng ngày) hoặc kết nối qua Zalo Official Account để gửi hình ảnh rễ cây cần khám bệnh.",
-          timestamp: "Vừa xong",
-        };
-      } else if (lower.includes("chống mặn") || lower.includes("biobandage")) {
-        botReply = {
-          id: (Date.now() + 1).toString(),
-          sender: "bot",
-          text: "Màng bọc rễ sinh học BioBandage có khả năng khóa giữ 88.4% ion Na⁺ và Cl⁻ trong ngưỡng mặn > 3‰, bảo vệ rễ tơ 90 - 120 ngày rồi tự hủy thành mùn hữu cơ, không gây ngạt rễ.",
-          timestamp: "Vừa xong",
-        };
-      }
+        },
+      ]);
 
-      setMessages((prev) => [...prev, botReply]);
-      setIsTyping(false);
-    }, 600);
-  };
+      if (!textToSend) setInputMessage("");
+      setIsAgentTyping(true);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: updatedMessages.map((m) => ({
+              role: m.sender === "user" ? "user" : "assistant",
+              content: m.text,
+            })),
+          }),
+        });
+
+        if (!response.ok || !response.body) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulatedText = "";
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith(":")) continue;
+
+            if (trimmed === "data: [DONE]") break;
+
+            if (trimmed.startsWith("data: ")) {
+              try {
+                const jsonStr = trimmed.slice(6);
+                const parsed = JSON.parse(jsonStr);
+                if (parsed.text) {
+                  accumulatedText += parsed.text;
+
+                  // Update bot message stream text in real-time
+                  setMessages((prev) =>
+                    prev.map((msg) =>
+                      msg.id === botMsgId
+                        ? {
+                            ...msg,
+                            text: accumulatedText,
+                            ...checkDosageCard(accumulatedText),
+                          }
+                        : msg
+                    )
+                  );
+                }
+              } catch {
+                // Ignore parse errors for partial chunks
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error("[ChatbotWidget] Error streaming message:", error);
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === botMsgId
+              ? {
+                  ...msg,
+                  text: "Dạ thưa bà con, kết nối mạng tạm thời bị gián đoạn. Bà con có thể gọi trực tiếp Tổng đài Kỹ thuật Nông học miễn cước 1800 6828 để gặp kỹ sư tư vấn ngay ạ!",
+                }
+              : msg
+          )
+        );
+      } finally {
+        setIsAgentTyping(false);
+      }
+    },
+    [inputMessage, isAgentTyping, messages]
+  );
+
+  // Scroll to bottom when messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isAgentTyping]);
 
   return (
     <>
@@ -136,7 +225,7 @@ export const ChatbotWidget: React.FC = () => {
             onClick={() => setIsOpen(true)}
             className="hidden sm:flex items-center gap-2.5 px-5 py-3 rounded-full bg-surface-container-lowest text-primary-forest shadow-3d-surface border border-surface-container-highest hover:scale-105 transition-all text-xs font-bold select-none cursor-pointer"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-secondary-moss animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
             <span>Hỏi Trợ Lý Nông Vụ ViNar</span>
           </button>
         )}
@@ -155,15 +244,15 @@ export const ChatbotWidget: React.FC = () => {
           ) : (
             <div className="relative">
               <MessageSquare className="w-7 h-7 text-[#bbefc0]" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-secondary-moss border-2 border-white" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-green-500 border-2 border-white" />
             </div>
           )}
         </button>
       </div>
 
-      {/* Chat Window Modal / Mobile Drawer */}
+      {/* Chat Window Panel */}
       {isOpen && (
-        <div className="fixed inset-x-4 bottom-24 sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[420px] h-[580px] max-h-[85vh] z-50 rounded-[2.5rem] bg-surface-container-lowest border border-surface-container-highest shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
+        <div className="fixed inset-x-4 bottom-24 sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[440px] h-[600px] max-h-[85vh] z-50 rounded-[2.5rem] bg-surface-container-lowest border border-surface-container-highest shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
           {/* Header */}
           <div className="p-4 sm:p-5 bg-primary-forest text-white flex items-center justify-between shadow-md shrink-0">
             <div className="flex items-center gap-3">
@@ -175,8 +264,8 @@ export const ChatbotWidget: React.FC = () => {
                   Trợ Lý Nông Vụ ViNar
                 </h4>
                 <div className="flex items-center gap-1.5 text-[11px] text-[#a0d3a5] mt-0.5">
-                  <span className="w-2 h-2 rounded-full bg-secondary-moss animate-pulse" />
-                  <span>Trực tuyến • Hỗ trợ kỹ thuật 24/7</span>
+                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span>Trực tuyến 24/7 · AI Gemma 4 (31B)</span>
                 </div>
               </div>
             </div>
@@ -191,7 +280,7 @@ export const ChatbotWidget: React.FC = () => {
               </a>
               <button
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
               >
                 <ChevronDown className="w-5 h-5" />
               </button>
@@ -211,9 +300,7 @@ export const ChatbotWidget: React.FC = () => {
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-2.5 ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
+                className={`flex gap-2.5 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.sender === "bot" && (
                   <div className="w-7 h-7 rounded-full bg-primary-forest text-white flex items-center justify-center shrink-0 text-xs font-bold mt-1">
@@ -222,15 +309,28 @@ export const ChatbotWidget: React.FC = () => {
                 )}
 
                 <div
-                  className={`max-w-[82%] rounded-2xl p-3.5 text-sm leading-relaxed shadow-sm ${
+                  className={`max-w-[85%] rounded-2xl p-3.5 text-sm leading-relaxed shadow-sm ${
                     msg.sender === "user"
                       ? "bg-primary-forest text-white rounded-tr-sm"
                       : "bg-surface-container-lowest text-deep-ink border border-surface-container-highest rounded-tl-sm"
                   }`}
                 >
-                  <p>{msg.text}</p>
+                  {/* Markdown Renderer for AI and User text */}
+                  {msg.sender === "bot" ? (
+                    msg.text ? (
+                      <MarkdownRenderer content={msg.text} />
+                    ) : (
+                      <div className="flex items-center gap-1.5 py-1">
+                        <span className="w-2 h-2 rounded-full bg-green-600 animate-bounce" style={{ animationDelay: "0ms" }} />
+                        <span className="w-2 h-2 rounded-full bg-green-600 animate-bounce" style={{ animationDelay: "150ms" }} />
+                        <span className="w-2 h-2 rounded-full bg-green-600 animate-bounce" style={{ animationDelay: "300ms" }} />
+                      </div>
+                    )
+                  ) : (
+                    <p className="whitespace-pre-line">{msg.text}</p>
+                  )}
 
-                  {/* Render In-Chat Interactive Dosage Card */}
+                  {/* Interactive Dosage Card */}
                   {msg.isDosageCard && msg.dosageData && (
                     <div className="mt-3 p-3.5 rounded-xl bg-surface-container border border-surface-container-highest space-y-2">
                       <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-primary-forest">
@@ -248,9 +348,7 @@ export const ChatbotWidget: React.FC = () => {
                           variant="secondary"
                           size="sm"
                           className="w-full text-xs h-9 min-h-0"
-                          onClick={() =>
-                            handleSendMessage("Tôi muốn nhận mẫu thử cho liều lượng này")
-                          }
+                          onClick={() => handleSendMessage("Tôi muốn nhận mẫu thử cho liều lượng này")}
                         >
                           Nhận Gói Thử Nghiệm 500g
                         </Button>
@@ -265,24 +363,17 @@ export const ChatbotWidget: React.FC = () => {
               </div>
             ))}
 
-            {isTyping && (
-              <div className="flex items-center gap-2 text-xs text-outline italic">
-                <span className="w-2 h-2 rounded-full bg-secondary-moss animate-bounce" />
-                <span className="w-2 h-2 rounded-full bg-secondary-moss animate-bounce delay-100" />
-                <span className="w-2 h-2 rounded-full bg-secondary-moss animate-bounce delay-200" />
-                <span>Trợ lý ViNar đang tìm giải pháp...</span>
-              </div>
-            )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestions Chips */}
+          {/* Quick Suggestion Chips */}
           <div className="p-2.5 bg-surface-container-low border-t border-surface-container-highest overflow-x-auto flex gap-2 no-scrollbar">
             {QUICK_SUGGESTION_CHIPS.map((chip, i) => (
               <button
                 key={i}
                 onClick={() => handleSendMessage(chip.prompt)}
-                className="shrink-0 px-3 py-1 rounded-full bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-deep-ink border border-surface-container-highest transition-colors shadow-xs"
+                disabled={isAgentTyping}
+                className="shrink-0 px-3 py-1 rounded-full bg-surface-container-lowest hover:bg-surface-container text-xs font-semibold text-deep-ink border border-surface-container-highest transition-colors shadow-xs cursor-pointer disabled:opacity-50"
               >
                 {chip.label}
               </button>
@@ -302,11 +393,12 @@ export const ChatbotWidget: React.FC = () => {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Nhập câu hỏi nông vụ hoặc loại cây..."
-              className="flex-1 h-11 px-4 bg-surface-container-low rounded-full border border-surface-container-highest text-sm text-deep-ink focus:outline-none focus:border-primary-forest focus:ring-1 focus:ring-primary-forest"
+              disabled={isAgentTyping}
+              className="flex-1 h-11 px-4 bg-surface-container-low rounded-full border border-surface-container-highest text-sm text-deep-ink focus:outline-none focus:border-primary-forest focus:ring-1 focus:ring-primary-forest disabled:opacity-50"
             />
             <button
               type="submit"
-              disabled={!inputMessage.trim()}
+              disabled={!inputMessage.trim() || isAgentTyping}
               className="w-11 h-11 rounded-full bg-primary-forest text-white disabled:opacity-40 flex items-center justify-center shrink-0 hover:bg-primary transition-colors cursor-pointer shadow-sm"
             >
               <Send className="w-4 h-4" />

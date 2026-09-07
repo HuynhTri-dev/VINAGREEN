@@ -19,6 +19,9 @@ import {
   Pebble3D,
   ChatbotWidget,
   CircularJourneyMap,
+  WeAreTrustedBy,
+  OurAwards,
+  WePartnerWith,
 } from "@/components";
 import {
   Sprout,
@@ -133,16 +136,16 @@ export default function HomePage() {
                       strokeWidth="1"
                       strokeDasharray="4 14"
                     />
-                    <circle cx="200" cy="40"  r="7" fill="#82ac42" />
+                    <circle cx="200" cy="40" r="7" fill="#82ac42" />
                     <circle cx="360" cy="200" r="5" fill="#2e5c38" />
                     <circle cx="200" cy="360" r="5" fill="#2e5c38" />
-                    <circle cx="40"  cy="200" r="7" fill="#82ac42" />
+                    <circle cx="40" cy="200" r="7" fill="#82ac42" />
                   </svg>
                 </div>
 
                 <div className="relative z-10 animate-float">
                   <div className="overflow-hidden rounded-3xl border-2 border-primary-forest/20 shadow-3d-surface bg-surface-container-lowest p-2 group transition-all duration-300 hover:shadow-2xl">
-                    <div className="relative h-48 w-full rounded-2xl overflow-hidden mb-3">
+                    <div className="relative h-56 w-full rounded-2xl overflow-hidden mb-3">
                       <img
                         src="/images/agrigel_water_absorption.jpg"
                         alt="AgriGel™ Sinh Học Hấp Thụ Nước 450x"
@@ -157,9 +160,6 @@ export default function HomePage() {
                         <Droplets className="w-5 h-5 text-secondary-moss" />
                         <h3 className="font-display font-bold text-lg text-primary-forest">AgriGel™ Sinh Học (450×)</h3>
                       </div>
-                      <p className="text-xs text-on-surface-variant leading-relaxed">
-                        Hạt ngậm ẩm tự thân ngậm giữ khoáng chất &amp; nhả nước chậm trực tiếp tại tầng rễ tơ.
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -275,13 +275,13 @@ export default function HomePage() {
                   <img
                     src="/images/drought_comparison.jpg"
                     alt="Mô phỏng khảo nghiệm thực địa AgriGel vs Không có AgriGel"
-                    className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-102"
+                    className="w-full h-auto object-cover transform transition-transform duration-700"
                   />
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">
-                    <span className="font-mono text-xs text-[#c1ee7c] uppercase font-bold tracking-wider">
+                  <div className="absolute bottom-4 inset-x-4 bg-white/85 dark:bg-black/75 backdrop-blur-md p-4 rounded-2xl border border-white/50 dark:border-white/10 shadow-2xl shadow-black/15 text-primary-forest">
+                    <span className="font-mono text-xs text-primary-forest dark:text-[#c1ee7c] uppercase font-bold tracking-wider block">
                       Ảnh Mô Phỏng Kết Quả Đối Chứng • ViNar AgriTech
                     </span>
-                    <p className="text-xs text-gray-200 mt-1">
+                    <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">
                       Đất không dùng hạt giữ ẩm (bên trái) bị nứt nẻ và héo lá; Đất có AgriGel (bên phải) giữ ẩm tối ưu.
                     </p>
                   </div>
@@ -313,10 +313,23 @@ export default function HomePage() {
           </Container>
         </section>
 
-
+        {/* =========================================================================
+            5. We Are Trusted By Section (Farms & Cooperatives Social Proof)
+           ========================================================================= */}
+        <WeAreTrustedBy />
 
         {/* =========================================================================
-            4. Pilot Application Form Section (Optimized for Farmers)
+            6. Our Awards & Recognition Showcase
+           ========================================================================= */}
+        <OurAwards />
+
+        {/* =========================================================================
+            7. We Partner With Section (Strategic Partners & ESG Impact Funds)
+           ========================================================================= */}
+        <WePartnerWith />
+
+        {/* =========================================================================
+            8. Pilot Application Form Section (Optimized for Farmers)
            ========================================================================= */}
         <section id="pilot-form" className="py-20 bg-surface-container-low border-t border-surface-container-highest">
           <Container>
@@ -414,11 +427,10 @@ export default function HomePage() {
                               type="button"
                               key={idx}
                               onClick={() => setSelectedCropChip(chip)}
-                              className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${
-                                selectedCropChip === chip
-                                  ? "bg-primary-forest text-white border-primary-forest"
-                                  : "bg-surface-container text-on-surface-variant border-surface-container-highest hover:bg-surface-container-high"
-                              }`}
+                              className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border transition-all cursor-pointer ${selectedCropChip === chip
+                                ? "bg-primary-forest text-white border-primary-forest"
+                                : "bg-surface-container text-on-surface-variant border-surface-container-highest hover:bg-surface-container-high"
+                                }`}
                             >
                               {chip}
                             </button>
