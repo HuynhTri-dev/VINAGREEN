@@ -15,4 +15,6 @@ export * from "./CircularJourneyMap";
 export * from "./OurAwards";
 export * from "./WeAreTrustedBy";
 export * from "./WePartnerWith";
+export * from "./HydrogelUsageSteps";
+export * from "./CustomerStories";
 

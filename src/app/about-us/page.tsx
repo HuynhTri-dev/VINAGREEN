@@ -104,7 +104,7 @@ export default function AboutUsPage() {
               {/* Right Column: High-Impact Visuals */}
               <div className="relative">
                 {/* Main Image */}
-                <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] border-4 border-white z-10">
+                <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-3d-surface border-4 border-white z-10">
                   <Image
                     src="/images/aboutus/chemical_lab.png"
                     alt="Thành viên sáng lập ViNar tại phòng Lab công nghệ cao ở Hàn Quốc hoặc Đài Loan, ánh sáng neon hiện đại, tập trung nghiên cứu"
@@ -168,7 +168,7 @@ export default function AboutUsPage() {
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               {/* Product/Impact Image */}
-              <div className="order-2 lg:order-1 relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-2xl">
+              <div className="order-2 lg:order-1 relative w-full aspect-square rounded-[2rem] overflow-hidden shadow-3d-surface">
                 <Image
                   src="/images/aboutus/nguon_vang.png"
                   alt="Cận cảnh bàn tay đang nâng niu một khối AgriGel ngậm nước trong suốt như pha lê, phía dưới là lớp đất tơi xốp, ánh sáng mặt trời tự nhiên rọi vào rực rỡ"
@@ -227,25 +227,28 @@ export default function AboutUsPage() {
               <Pebble3D
                 variant="forest"
                 shape="egg"
-                title="Môi Trường"
-                subtitle="Khép kín tuần hoàn. Phục hồi tự nhiên. Cam kết hành động Net Zero 2050."
-                metric="Tuần Hoàn Trái Đất"
+                category="Môi Trường"
+                title="Tuần Hoàn Trái Đất"
+                subtitle="Khép kín tuần hoàn. Phục hồi tự nhiên. Cam kết hành động hướng tới Net Zero 2050."
+                metric="Net Zero"
                 icon={<Sparkles className="w-6 h-6 text-[#bbefc0]" />}
               />
               <Pebble3D
                 variant="sprout"
                 shape="egg"
-                title="Cộng Đồng"
-                subtitle="Biến phế phẩm thành sinh kế. Tăng thu nhập trực tiếp cho bà con vùng cao."
-                metric="Nâng Tầm Lõi Sống"
+                category="Cộng Đồng"
+                title="Nâng Tầm Đời Sống"
+                subtitle="Biến phế phẩm thành sinh kế. Tăng thu nhập trực tiếp cho bà con nông dân."
+                metric="Sinh Kế"
                 icon={<Heart className="w-6 h-6 text-[#154423]" />}
               />
               <Pebble3D
                 variant="timber"
                 shape="egg"
-                title="Xã Hội"
-                subtitle="Tiên phong Deep-tech. Thay thế hoàn toàn vật liệu độc hại. For Good."
-                metric="Công Nghệ Vị Nhân Sinh"
+                category="Xã Hội"
+                title="Công Nghệ Vị Nhân Sinh"
+                subtitle="Tiên phong Deep-tech sinh học. Thay thế hoàn toàn vật liệu polymer độc hại."
+                metric="Deep-Tech"
                 icon={<ShieldCheck className="w-6 h-6 text-[#ffdcc6]" />}
               />
             </div>

@@ -26,7 +26,7 @@ import {
 // Types
 // ---------------------------------------------------------------------------
 
-export interface JourneyStep {
+export interface CircularJourneyStep {
   stepNumber: number;
   title: string;
   subtitle: string;
@@ -38,6 +38,7 @@ export interface JourneyStep {
   hotspot: { top: number; left: number; width: number; height: number };
   /** Tailwind color classes for the detail panel background + border. */
   accentClass: string;
+  badgeBgClass?: string;
   /** Optional image to display in the detail panel */
   image?: string;
 }
@@ -53,7 +54,7 @@ export interface JourneyStep {
 //   Step 7 circle "7" is upper-left        → top ~14%, left ~6%
 // ---------------------------------------------------------------------------
 
-export const CIRCULAR_STEPS: JourneyStep[] = [
+export const CIRCULAR_STEPS: CircularJourneyStep[] = [
   {
     stepNumber: 1,
     title: "Tạo Sinh Kế Bền Vững Cho Bà Con",
@@ -307,7 +308,7 @@ export const CircularJourneyMap: React.FC = () => {
 
               {/* Live Activity Highlights Widget */}
               <div className="p-3.5 rounded-2xl bg-surface-container/60 border border-surface-container-highest space-y-2 shadow-xs">
-                {active.highlights.map((h, i) => (
+                {active.highlights.map((h: string, i: number) => (
                   <div key={i} className="flex items-start gap-2 text-xs font-semibold text-primary-forest">
                     <CheckCircle2 className="w-4 h-4 text-secondary-moss shrink-0 mt-0.5" />
                     {h}

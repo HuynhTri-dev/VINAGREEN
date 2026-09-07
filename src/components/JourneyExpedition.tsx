@@ -122,52 +122,44 @@ export const JourneyExpedition: React.FC = () => {
               <div
                 data-id={step.id}
                 ref={(el) => { observerRefs.current[idx] = el; }}
-                className={`relative w-full transition-all duration-1000 ease-out ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-                }`}
+                className={`relative w-full transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+                  }`}
               >
                 {/* Vertical Line Segment */}
-                <div 
-                  className={`absolute top-0 bottom-0 w-[4px] bg-primary-forest/40 ${
-                    isEven ? "left-[1.5rem] sm:left-[2.5rem] -ml-[2px]" : "right-[1.5rem] sm:right-[2.5rem] -mr-[2px]"
-                  }`}
+                <div
+                  className={`absolute top-0 bottom-0 w-[4px] bg-primary-forest/40 ${isEven ? "left-[1.5rem] sm:left-[2.5rem] -ml-[2px]" : "right-[1.5rem] sm:right-[2.5rem] -mr-[2px]"
+                    }`}
                 />
 
                 {/* Station Node Icon */}
-                <div 
-                  className={`absolute top-12 sm:top-16 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-700 delay-300 ring-4 ring-surface z-10 ${
-                    isVisible ? "scale-100" : "scale-0"
-                  } ${
-                    isEven ? "left-[1.5rem] sm:left-[2.5rem] -translate-x-1/2" : "right-[1.5rem] sm:right-[2.5rem] translate-x-1/2"
-                  } ${
-                    step.type === "lab" ? "bg-primary-forest text-white" :
-                    step.type === "competition" ? "bg-[#D97706] text-white" :
-                    "bg-secondary-moss text-white"
-                  }`}
+                <div
+                  className={`absolute top-12 sm:top-16 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-700 delay-300 ring-4 ring-surface z-10 ${isVisible ? "scale-100" : "scale-0"
+                    } ${isEven ? "left-[1.5rem] sm:left-[2.5rem] -translate-x-1/2" : "right-[1.5rem] sm:right-[2.5rem] translate-x-1/2"
+                    } ${step.type === "lab" ? "bg-primary-forest text-white" :
+                      step.type === "competition" ? "bg-[#D97706] text-white" :
+                        "bg-secondary-moss text-white"
+                    }`}
                 >
                   {step.icon}
                 </div>
 
                 {/* Content Container */}
-                <div 
-                  className={`w-full py-6 sm:py-8 ${
-                    isEven 
-                      ? "pl-[4.5rem] sm:pl-[6.5rem] pr-[0.5rem] sm:pr-[2rem]" 
-                      : "pr-[4.5rem] sm:pr-[6.5rem] pl-[0.5rem] sm:pl-[2rem]"
-                  }`}
+                <div
+                  className={`w-full py-6 sm:py-8 ${isEven
+                    ? "pl-[4.5rem] sm:pl-[6.5rem] pr-[0.5rem] sm:pr-[2rem]"
+                    : "pr-[4.5rem] sm:pr-[6.5rem] pl-[0.5rem] sm:pl-[2rem]"
+                    }`}
                 >
                   {/* Card with Image and Text Layout Horizontal on Desktop (xl:flex-row) */}
-                  <div className="w-full bg-surface-container-lowest p-5 sm:p-8 rounded-[2rem] border border-surface-container-highest shadow-2xl flex flex-col xl:flex-row gap-6 sm:gap-10 hover:border-primary-forest/40 transition-all duration-300 relative overflow-hidden group">
-                    
+                  <div className="w-full bg-surface-container-lowest p-5 sm:p-8 rounded-[2rem] border border-surface-container-highest shadow-3d-surface flex flex-col xl:flex-row gap-6 sm:gap-10 hover:border-primary-forest/40 transition-all duration-300 relative overflow-hidden group">
+
                     {/* Background ambient glow */}
-                    <div className={`absolute top-0 w-64 h-64 bg-primary-forest/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none ${
-                      isEven ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"
-                    }`}></div>
+                    <div className={`absolute top-0 w-64 h-64 bg-primary-forest/5 rounded-full blur-3xl -translate-y-1/2 pointer-events-none ${isEven ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"
+                      }`}></div>
 
                     {/* Image Placeholder Section */}
-                    <div className={`w-full xl:w-2/5 shrink-0 flex flex-col ${
-                      isEven ? "xl:order-2" : "xl:order-1"
-                    }`}>
+                    <div className={`w-full xl:w-2/5 shrink-0 flex flex-col ${isEven ? "xl:order-2" : "xl:order-1"
+                      }`}>
                       <div className="w-full aspect-[4/3] sm:aspect-video xl:aspect-[4/3] rounded-2xl bg-surface-container border border-surface-container-highest flex flex-col items-center justify-center text-center p-6 overflow-hidden relative group-hover:bg-surface-container-highest transition-colors cursor-pointer">
                         <ImageIcon className="w-10 h-10 text-outline mb-3 group-hover:scale-110 group-hover:text-primary-forest transition-all duration-500" />
                         <span className="text-xs sm:text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-2">
@@ -177,7 +169,7 @@ export const JourneyExpedition: React.FC = () => {
                           {step.imagePlaceholder}
                         </span>
                       </div>
-                      
+
                       {/* Quote below image */}
                       {step.quote && (
                         <div className="mt-4 sm:mt-5 relative p-4 sm:p-5 rounded-2xl bg-primary-forest/5 border border-primary-forest/10 italic text-xs sm:text-sm text-deep-ink/80 font-medium">
@@ -190,9 +182,8 @@ export const JourneyExpedition: React.FC = () => {
                     </div>
 
                     {/* Text Project Content Section */}
-                    <div className={`w-full xl:w-3/5 flex flex-col justify-center ${
-                      isEven ? "xl:order-1" : "xl:order-2"
-                    }`}>
+                    <div className={`w-full xl:w-3/5 flex flex-col justify-center ${isEven ? "xl:order-1" : "xl:order-2"
+                      }`}>
                       <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
                         <span className="px-3.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase font-mono">
                           {step.badge}
@@ -219,11 +210,11 @@ export const JourneyExpedition: React.FC = () => {
                         <div className="mb-2 mt-4 space-y-4">
                           <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary-forest flex items-center gap-2">
                             <Trophy className="w-4 h-4 text-tertiary-timber" />
-                            {step.type === "competition" 
-                              ? "Dấu Ấn Trên Các Đấu Trường Khởi Nghiệp" 
+                            {step.type === "competition"
+                              ? "Dấu Ấn Trên Các Đấu Trường Khởi Nghiệp"
                               : "Giải thưởng & Thành tích"}
                           </div>
-                          
+
                           {/* Mini Timeline Layout for Awards */}
                           <div className="relative border-l-[3px] border-surface-container-highest ml-2.5 sm:ml-3 space-y-4 py-2">
                             {step.awards.map((award, i) => (
@@ -232,7 +223,7 @@ export const JourneyExpedition: React.FC = () => {
                                 <div className="absolute -left-[11px] top-1/2 -translate-y-1/2 w-[19px] h-[19px] rounded-full bg-surface-container-lowest border-[3px] border-surface-container-highest group-hover/award:border-tertiary-timber transition-colors flex items-center justify-center">
                                   <div className="w-2 h-2 rounded-full bg-tertiary-timber scale-0 group-hover/award:scale-100 transition-transform" />
                                 </div>
-                                
+
                                 {/* Content Frame */}
                                 <div className="p-3.5 sm:p-4 rounded-xl bg-surface-container-low border border-surface-container-highest group-hover/award:border-tertiary-timber/40 group-hover/award:bg-surface-container transition-all">
                                   <div className="font-bold text-xs sm:text-sm text-primary-forest leading-snug">
@@ -260,33 +251,32 @@ export const JourneyExpedition: React.FC = () => {
 
               {/* Curving Winding Connector to Next Station */}
               {!isLast && (
-                <div 
-                  className={`relative w-full h-24 sm:h-40 transition-all duration-1000 delay-300 ${
-                    isVisible ? "opacity-100" : "opacity-0"
-                  }`}
+                <div
+                  className={`relative w-full h-24 sm:h-40 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100" : "opacity-0"
+                    }`}
                 >
                   <div className="absolute left-[1.5rem] sm:left-[2.5rem] right-[1.5rem] sm:right-[2.5rem] top-0 bottom-0">
                     <svg className="w-full h-full text-primary-forest/40" preserveAspectRatio="none" viewBox="0 0 100 100" overflow="visible">
                       {isEven ? (
                         // Smooth S-Curve: Left to Right
-                        <path 
-                          d="M 0,0 L 0,20 C 0,50 100,50 100,80 L 100,100" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="4" 
-                          strokeDasharray="12 12" 
-                          vectorEffect="non-scaling-stroke" 
+                        <path
+                          d="M 0,0 L 0,20 C 0,50 100,50 100,80 L 100,100"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          strokeDasharray="12 12"
+                          vectorEffect="non-scaling-stroke"
                           className="animate-pulse"
                         />
                       ) : (
                         // Smooth S-Curve: Right to Left
-                        <path 
-                          d="M 100,0 L 100,20 C 100,50 0,50 0,80 L 0,100" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="4" 
-                          strokeDasharray="12 12" 
-                          vectorEffect="non-scaling-stroke" 
+                        <path
+                          d="M 100,0 L 100,20 C 100,50 0,50 0,80 L 0,100"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          strokeDasharray="12 12"
+                          vectorEffect="non-scaling-stroke"
                           className="animate-pulse"
                         />
                       )}

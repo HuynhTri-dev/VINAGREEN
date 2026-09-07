@@ -22,6 +22,8 @@ import {
   WeAreTrustedBy,
   OurAwards,
   WePartnerWith,
+  HydrogelUsageSteps,
+  CustomerStories,
 } from "@/components";
 import {
   Sprout,
@@ -312,6 +314,16 @@ export default function HomePage() {
             <CircularJourneyMap />
           </Container>
         </section>
+
+        {/* =========================================================================
+            4b. Hydrogel 4-Step Application Pipeline Guide
+           ========================================================================= */}
+        <HydrogelUsageSteps />
+
+        {/* =========================================================================
+            4c. Success Stories & Customer Perspectives (Home & Commercial Agriculture)
+           ========================================================================= */}
+        <CustomerStories />
 
         {/* =========================================================================
             5. We Are Trusted By Section (Farms & Cooperatives Social Proof)
