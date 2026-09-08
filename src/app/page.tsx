@@ -302,12 +302,12 @@ export default function HomePage() {
               <Badge variant="timber" size="md" icon={<Recycle className="w-4 h-4" />}>
                 Vòng Tuần Hoàn Sinh Học Khép Kín
               </Badge>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-forest">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-forest">
                 Hành Trình Nông Nghiệp Tuần Hoàn 7 Bước
               </h2>
-              <p className="text-base text-on-surface-variant leading-relaxed">
+              {/* <p className="text-base text-on-surface-variant leading-relaxed">
                 Từ phụ phẩm rơm rạ, trấu &amp; vỏ cà phê thu mua của bà con đến viên nén sinh học giữ ẩm rễ tơ, bảo vệ cây trồng mùa khô hạn và 100% tái tạo lại độ phì nhiêu cho đất mẹ.
-              </p>
+              </p> */}
             </div>
 
             {/* Interactive 7-Step Circular Journey Map */}

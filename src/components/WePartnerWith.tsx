@@ -79,12 +79,12 @@ export const WePartnerWith: React.FC = () => {
           <Badge variant="timber" size="md" icon={<Handshake className="w-4 h-4" />}>
             Hệ Sinh Thái Hợp Tác
           </Badge>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-forest leading-tight">
+          <h2 className="font-display text-3xl sm:text-3xl font-bold text-primary-forest leading-tight">
             Đối Tác Chiến Lược &amp; Doanh Nghiệp Đồng Hành
           </h2>
-          <p className="text-base text-on-surface-variant leading-relaxed">
+          {/* <p className="text-base text-on-surface-variant leading-relaxed">
             Liên kết mô hình kinh tế tuần hoàn cùng các dự án nông nghiệp xanh, đội ngũ công nghệ, Viện nghiên cứu &amp; Quỹ đầu tư tác động (Impact Funds).
-          </p>
+          </p> */}
 
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-3">
@@ -114,7 +114,7 @@ export const WePartnerWith: React.FC = () => {
           {filteredPartners.map((partner) => (
             <div
               key={partner.id}
-              className={`p-6 rounded-3xl border-2 shadow-3d-surface transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between group ${partner.isFeatured
+              className={`h-full p-6 rounded-3xl border-2 shadow-3d-surface transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between group ${partner.isFeatured
                 ? "bg-surface-container-lowest border-secondary-moss shadow-lg"
                 : "bg-surface-container-lowest border-surface-container-highest hover:border-secondary-moss/40"
                 }`}
@@ -196,7 +196,7 @@ export const WePartnerWith: React.FC = () => {
           ))}
 
           {/* Invitation Card for New Strategic Partners */}
-          <div className="p-6 rounded-3xl bg-primary-forest text-white shadow-3d-forest flex flex-col justify-between relative overflow-hidden group">
+          <div className="h-full p-6 rounded-3xl bg-primary-forest text-white shadow-3d-forest flex flex-col justify-between relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
             <div>

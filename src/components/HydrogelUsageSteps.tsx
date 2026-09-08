@@ -79,13 +79,13 @@ export const HydrogelUsageSteps: React.FC = () => {
             <Droplets className="w-3.5 h-3.5" />
             <span>Quy Trình 4 Bước Đơn Giản</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-forest">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-forest">
             Hướng Dẫn Sử Dụng Hạt Hydrogel ViNar
           </h2>
-          <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed max-w-xl mx-auto">
+          {/* <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed max-w-xl mx-auto">
             Ứng dụng hạt sinh học ngậm nước giúp tối ưu độ ẩm đất trồng, tiết kiệm
             lượng nước tưới và duy trì sự phát triển bền vững cho cây.
-          </p>
+          </p> */}
         </div>
 
         {/* Pipeline Container (Left to Right) */}

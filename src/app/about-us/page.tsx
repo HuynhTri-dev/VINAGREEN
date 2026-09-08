@@ -44,38 +44,38 @@ export default function AboutUsPage() {
         {/* =========================================================================
             1. Hero: Dấu Chân Toàn Cầu. Khát Vọng Việt Nam.
            ========================================================================= */}
-        <section className="relative overflow-hidden pt-8">
+        <section className="relative pt-8 pb-12">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left Column: Sharp, Punchy Text */}
               <div className="space-y-8">
                 <Badge variant="timber" size="md" icon={<Compass className="w-4 h-4" />}>
                   Câu Chuyện ViNar
                 </Badge>
 
-                <h1 className="font-display text-5xl sm:text-6xl font-bold text-primary-forest leading-tight">
+                <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
                   Dấu Chân Toàn Cầu. <br />
                   <span className="text-secondary-moss">Khát Vọng Việt Nam.</span>
                 </h1>
 
                 <div className="text-lg text-on-surface-variant leading-relaxed space-y-4">
                   <p>
-                    Từ các vườn ươm công nghệ tại <strong>Hàn Quốc, Đài Loan, Nhật Bản</strong>, chúng tôi chứng kiến sức mạnh của Nông nghiệp Thông minh. Nhưng nhìn về quê nhà là một nghịch cảnh xót xa:
+                    Thấu hiểu sức mạnh của Nông nghiệp Thông minh từ quốc tế, chúng tôi trở về quê nhà<span className="hidden md:inline"> trước thực trạng trăn trở</span>:
                   </p>
 
-                  <ul className="space-y-3 font-medium text-deep-ink">
+                  <ul className="space-y-2.5 text-deep-ink hidden md:block">
                     <li className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-red-500/80" />
-                      Hàng triệu tấn rơm rạ bị đốt, khói bụi bủa vây.
+                      <div className="w-2 h-2 rounded-full bg-red-500/80 shrink-0" />
+                      Hàng triệu tấn phế phẩm nông nghiệp lãng phí.
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-orange-500/80" />
+                      <div className="w-2 h-2 rounded-full bg-orange-500/80 shrink-0" />
                       Nông dân ĐBSCL &amp; Tây Nguyên kiệt quệ vì hạn mặn.
                     </li>
                   </ul>
 
-                  <p className="pt-2 font-bold text-primary-forest text-xl">
-                    Đó là cú hích để ViNar ra đời.
+                  <p className="pt-1 font-bold text-primary-forest text-xl">
+                    Đó là động lực để ViNar ra đời.
                   </p>
                 </div>
 
@@ -102,7 +102,7 @@ export default function AboutUsPage() {
               </div>
 
               {/* Right Column: High-Impact Visuals */}
-              <div className="relative">
+              <div className="relative lg:mr-6 lg:mb-6">
                 {/* Main Image */}
                 <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-3d-surface border-4 border-white z-10">
                   <Image
@@ -115,7 +115,7 @@ export default function AboutUsPage() {
                   />
                 </div>
                 {/* Floating Secondary Image (Context) */}
-                <div className="absolute -bottom-10 -left-10 w-2/3 aspect-square rounded-[2rem] overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] border-4 border-white z-20 hidden md:block">
+                <div className="absolute -bottom-6 -right-4 sm:-bottom-8 sm:-right-6 lg:-bottom-8 lg:-right-8 w-2/3 max-w-[280px] aspect-square rounded-[2rem] overflow-hidden shadow-3d-surface border-4 border-white z-20 hidden md:block">
                   <Image
                     src="/images/aboutus/han_man.png"
                     alt="Nông dân Tây Nguyên đang ôm những mảng đất nứt nẻ do hạn mặn, ánh mắt lo âu nhưng đầy hi vọng khi cầm trên tay mầm cây xanh"
@@ -150,7 +150,7 @@ export default function AboutUsPage() {
                 &quot;Chúng tôi không chờ đợi sự thay đổi. <br className="hidden md:block" />Chúng tôi kiến tạo thay đổi.&quot;
               </h2>
               <p className="text-lg sm:text-xl text-[#d1e5d3] max-w-2xl mx-auto font-medium leading-relaxed">
-                Mang lại sinh kế bền vững cho cộng đồng yếu thế và đưa Việt Nam tiến nhanh hơn trên hành trình chạm đích <strong className="text-white">Net Zero 2050</strong>.
+                Mang lại sinh kế bền vững<span className="hidden md:inline"> cho cộng đồng yếu thế và đưa Việt Nam tiến nhanh hơn trên hành trình chạm đích <strong className="text-white">Net Zero 2050</strong></span>.
               </p>
               <div className="pt-6">
                 <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-bold tracking-widest uppercase shadow-lg">
@@ -189,7 +189,7 @@ export default function AboutUsPage() {
                 </h2>
 
                 <p className="text-lg text-on-surface-variant">
-                  Tại ViNar, khái niệm &quot;rác thải&quot; bị xóa bỏ hoàn toàn. Chúng tôi tái sinh hàng triệu tấn phế phẩm nông nghiệp thành vật tư sinh học đột phá.
+                  Tại ViNar, khái niệm &quot;rác thải&quot; bị xóa bỏ hoàn toàn.<span className="hidden md:inline"> Chúng tôi tái sinh hàng triệu tấn phế phẩm nông nghiệp thành vật tư sinh học đột phá.</span>
                 </p>
 
                 <div className="space-y-4">
@@ -218,9 +218,9 @@ export default function AboutUsPage() {
           <Container>
             <div className="text-center mb-16">
               <h2 className="font-display text-4xl font-bold text-primary-forest mb-4">
-                3 Trụ Cột Chuẩn Mực Toàn Cầu
+                3 Trụ Cột <span className="hidden md:inline">Chuẩn Mực Toàn Cầu</span>
               </h2>
-              <p className="text-on-surface-variant text-lg">Hành động thực chất. Tác động bền vững.</p>
+              <p className="text-on-surface-variant text-lg">Hành động thực chất.<span className="hidden md:inline"> Tác động bền vững.</span></p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -268,7 +268,7 @@ export default function AboutUsPage() {
                   <span className="text-secondary-moss">Tâm Huyết Là Cốt Lõi.</span>
                 </h2>
                 <p className="text-lg text-on-surface-variant">
-                  Sự khác biệt lớn nhất của ViNar không chỉ nằm ở công nghệ sinh học thông minh, mà nằm ở khát vọng phụng sự của những người trẻ sát cánh cùng nông dân.
+                  Sự khác biệt của ViNar nằm ở khát vọng phụng sự<span className="hidden md:inline"> của những người trẻ sát cánh cùng nông dân</span>.
                 </p>
               </div>
               <div className="relative w-full aspect-[16/9] rounded-[2rem] overflow-hidden shadow-xl">

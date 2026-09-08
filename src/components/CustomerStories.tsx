@@ -117,13 +117,13 @@ export const CustomerStories: React.FC = () => {
           <Badge variant="moss" size="md" icon={<HeartHandshake className="w-4 h-4" />}>
             Câu Chuyện Thành Công &amp; Góc Nhìn Đa Chiều
           </Badge>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-forest leading-tight">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-forest leading-tight">
             Từ Ban Công Thành Thị Đến Đại Ngàn Tây Nguyên
           </h2>
-          <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
+          {/* <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
             Khám phá cách giải pháp hạt ngậm ẩm sinh học ViNar tạo ra giá trị thiết thực
             cho cả người yêu cây đô thị và các chủ nông trại quy mô lớn.
-          </p>
+          </p> */}
         </div>
 
         {/* Stories Flow */}
@@ -132,9 +132,8 @@ export const CustomerStories: React.FC = () => {
             return (
               <div
                 key={story.id}
-                className={`flex flex-col ${
-                  story.reversed ? "lg:flex-row-reverse" : "lg:flex-row"
-                } gap-10 lg:gap-16 items-center`}
+                className={`flex flex-col ${story.reversed ? "lg:flex-row-reverse" : "lg:flex-row"
+                  } gap-10 lg:gap-16 items-center`}
               >
                 {/* Visual Image Block with 3D shadow & floating glass badge */}
                 <div className="w-full lg:w-1/2">
@@ -146,7 +145,7 @@ export const CustomerStories: React.FC = () => {
                         alt={story.imageAlt}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
-                      
+
                       {/* Gradient overlay on hover */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                     </div>
