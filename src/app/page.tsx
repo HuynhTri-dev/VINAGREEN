@@ -37,6 +37,7 @@ import {
   PhoneCall,
   Send,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -299,7 +300,19 @@ export default function HomePage() {
         <section className="py-20 bg-surface-container-low border-t border-surface-container-highest">
           <Container>
             <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-              <Badge variant="timber" size="md" icon={<Recycle className="w-4 h-4" />}>
+              <Badge 
+                variant="timber" 
+                size="md" 
+                icon={
+                  <motion.span
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+                    className="inline-flex"
+                  >
+                    <Recycle className="w-4 h-4" />
+                  </motion.span>
+                }
+              >
                 Vòng Tuần Hoàn Sinh Học Khép Kín
               </Badge>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-primary-forest">

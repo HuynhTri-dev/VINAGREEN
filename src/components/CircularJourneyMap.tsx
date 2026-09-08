@@ -8,6 +8,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
   Wheat,
@@ -203,7 +204,7 @@ export const CircularJourneyMap: React.FC = () => {
                       height: `${step.hotspot.height}%`,
                     }}
                     className={[
-                      "rounded-3xl cursor-pointer",
+                      "rounded-3xl cursor-pointer relative",
                       "transition-all duration-300",
                       "focus:outline-none focus-visible:ring-4 focus-visible:ring-secondary-moss",
                       // Visible border on hover, highly visible when active
@@ -212,6 +213,11 @@ export const CircularJourneyMap: React.FC = () => {
                         : "border-2 border-transparent hover:border-white/60 hover:bg-white/10 hover:shadow-md hover:z-10",
                     ].join(" ")}
                   >
+                    {/* Pulsing ripple ring on active step */}
+                    {isActive && (
+                      <span className="absolute inset-0 rounded-3xl animate-ping border-2 border-secondary-moss/60 pointer-events-none opacity-40" />
+                    )}
+
                     {/* Number label — visually hidden for screen readers */}
                     <span className="sr-only" aria-label={`Bước ${step.stepNumber}`}>
                       {step.stepNumber}
@@ -236,7 +242,7 @@ export const CircularJourneyMap: React.FC = () => {
                   key={step.stepNumber}
                   onClick={() => setSelectedStep(step.stepNumber)}
                   className={[
-                    "h-10 rounded-xl font-mono text-xs font-extrabold transition-all cursor-pointer",
+                    "h-10 rounded-xl font-mono text-xs font-extrabold transition-all cursor-pointer relative",
                     "flex items-center justify-center",
                     isActive
                       ? "bg-primary-forest text-white ring-2 ring-secondary-moss scale-105"
@@ -253,37 +259,45 @@ export const CircularJourneyMap: React.FC = () => {
         {/* ── RIGHT: Dynamic Island detail panel (Equal Height Layout) ──────── */}
         <div className="lg:col-span-5 flex flex-col h-full">
           <div
-            key={`detail-${active.stepNumber}`}
-            className="flex-1 flex flex-col justify-between rounded-3xl border-2 border-surface-container-highest bg-surface-container-lowest p-5 sm:p-6 shadow-3d-surface text-deep-ink transition-all duration-500 animate-fade-slide-up relative overflow-hidden h-full"
+            className="flex-1 flex flex-col justify-between rounded-3xl border-2 border-surface-container-highest bg-surface-container-lowest p-5 sm:p-6 shadow-3d-surface text-deep-ink transition-all duration-500 relative overflow-hidden h-full"
           >
             {/* Top Light Ambient Glow */}
             <div className="absolute -top-16 -right-16 w-36 h-36 bg-secondary-moss/15 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Fixed Header Section */}
-            <div className="space-y-3 shrink-0">
-              {/* Top Capsule Status Bar */}
-              <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-surface-container-highest">
-                <div className="flex items-center gap-2 bg-surface-container px-3 py-1 rounded-full border border-surface-container-highest">
-                  <span className="w-2 h-2 rounded-full bg-secondary-moss animate-pulse shadow-[0_0_8px_#52b788]" />
-                  <span className="font-mono text-xs font-bold text-primary-forest tracking-wider uppercase">
-                    STEP 0{active.stepNumber} <span className="text-outline">/ 07</span>
-                  </span>
-                </div>
-                <span className="px-3 py-1 rounded-full bg-primary-forest/10 text-primary-forest border border-primary-forest/20 font-mono font-bold text-xs tracking-wide shadow-xs">
-                  {active.badge}
-                </span>
-              </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`detail-content-${active.stepNumber}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="flex-1 flex flex-col justify-between"
+              >
+                {/* Fixed Header Section */}
+                <div className="space-y-3 shrink-0">
+                  {/* Top Capsule Status Bar */}
+                  <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-surface-container-highest">
+                    <div className="flex items-center gap-2 bg-surface-container px-3 py-1 rounded-full border border-surface-container-highest">
+                      <span className="w-2 h-2 rounded-full bg-secondary-moss animate-pulse shadow-[0_0_8px_#52b788]" />
+                      <span className="font-mono text-xs font-bold text-primary-forest tracking-wider uppercase">
+                        STEP 0{active.stepNumber} <span className="text-outline">/ 07</span>
+                      </span>
+                    </div>
+                    <span className="px-3 py-1 rounded-full bg-primary-forest/10 text-primary-forest border border-primary-forest/20 font-mono font-bold text-xs tracking-wide shadow-xs">
+                      {active.badge}
+                    </span>
+                  </div>
 
-              {/* Title & Icon Header */}
-              <div className="flex items-center gap-3 justify-between">
-                <h3 className="font-display font-bold text-lg sm:text-xl text-primary-forest leading-snug tracking-tight">
-                  {active.title}
-                </h3>
-                <div className="p-2.5 rounded-2xl bg-surface-container border border-surface-container-highest text-primary-forest shrink-0 shadow-sm">
-                  {active.icon}
+                  {/* Title & Icon Header */}
+                  <div className="flex items-center gap-3 justify-between">
+                    <h3 className="font-display font-bold text-lg sm:text-xl text-primary-forest leading-snug tracking-tight">
+                      {active.title}
+                    </h3>
+                    <div className="p-2.5 rounded-2xl bg-surface-container border border-surface-container-highest text-primary-forest shrink-0 shadow-sm">
+                      {active.icon}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
             {/* Scrollable Middle Content Section */}
             <div className="flex-1 overflow-y-auto my-3 pr-1 space-y-3.5 scrollbar-thin scrollbar-thumb-surface-container-highest">
@@ -316,6 +330,8 @@ export const CircularJourneyMap: React.FC = () => {
                 ))}
               </div>
             </div>
+            </motion.div>
+            </AnimatePresence>
 
             {/* Fixed Bottom Capsule Navigation */}
             <div className="pt-3 border-t border-surface-container-highest flex items-center justify-between gap-2 shrink-0">

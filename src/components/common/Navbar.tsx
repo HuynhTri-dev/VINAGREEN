@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sprout, Menu, X, PhoneCall, Bot, Globe } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Container, Button } from "@/design-system";
 import { ThemeToggle } from "./ThemeToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -59,7 +60,11 @@ export const Navbar: React.FC = () => {
                 >
                   {t(item.key)}
                   {isActive && (
-                    <span className="absolute bottom-0 inset-x-0 h-0.5 bg-secondary-moss rounded-full" />
+                    <motion.span 
+                      layoutId="activeNavbarTab"
+                      className="absolute bottom-0 inset-x-0 h-0.5 bg-secondary-moss rounded-full"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
                   )}
                 </Link>
               );
@@ -101,43 +106,53 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-5 border-t border-surface-container-highest space-y-3 bg-surface-container-lowest/95 backdrop-blur-md rounded-b-3xl px-4 shadow-xl">
-            {NAV_ITEMS.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors ${isActive
-                    ? "bg-primary-forest text-white"
-                    : "text-deep-ink hover:bg-surface-container"
-                    }`}
-                >
-                  {t(item.key)}
-                </Link>
-              );
-            })}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:hidden overflow-hidden bg-surface-container-lowest/95 backdrop-blur-md rounded-b-3xl shadow-xl border-t border-surface-container-highest"
+            >
+              <div className="py-5 px-4 space-y-3">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors ${isActive
+                        ? "bg-primary-forest text-white"
+                        : "text-deep-ink hover:bg-surface-container"
+                        }`}
+                    >
+                      {t(item.key)}
+                    </Link>
+                  );
+                })}
 
-            <div className="pt-3 border-t border-surface-container-highest flex items-center justify-between">
-              <button
-                onClick={toggleLang}
-                className="flex items-center gap-2 text-xs font-bold text-primary-forest"
-              >
-                <Globe className="w-4 h-4 text-secondary-moss" />
-                <span>Ngôn ngữ: {lang}</span>
-              </button>
-              <a
-                href="tel:18006828"
-                className="flex items-center gap-1.5 text-xs font-bold text-secondary-moss font-mono"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>Hotline: 1800 6828</span>
-              </a>
-            </div>
-          </div>
-        )}
+                <div className="pt-3 border-t border-surface-container-highest flex items-center justify-between">
+                  <button
+                    onClick={toggleLang}
+                    className="flex items-center gap-2 text-xs font-bold text-primary-forest"
+                  >
+                    <Globe className="w-4 h-4 text-secondary-moss" />
+                    <span>Ngôn ngữ: {lang}</span>
+                  </button>
+                  <a
+                    href="tel:18006828"
+                    className="flex items-center gap-1.5 text-xs font-bold text-secondary-moss font-mono"
+                  >
+                    <PhoneCall className="w-4 h-4" />
+                    <span>Hotline: 1800 6828</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Container>
     </header>
   );

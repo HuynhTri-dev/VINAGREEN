@@ -35,24 +35,22 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 export default function AboutUsPage() {
   const { lang, t } = useLanguage();
   const focusAreas = [
     {
       key: "about.focus.smart_agri",
-      icon: <Leaf className="w-5 h-5 text-primary-forest" />,
-      bg: "bg-primary-forest/20"
+      icon: <Leaf className="w-5 h-5 text-primary-forest" />
     },
     {
       key: "about.focus.medical",
-      icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
-      bg: "bg-blue-600/20"
+      icon: <ShieldCheck className="w-5 h-5 text-primary-forest" />
     },
     {
       key: "about.focus.waste",
-      icon: <Globe className="w-5 h-5 text-secondary-moss" />,
-      bg: "bg-secondary-moss/20"
+      icon: <Globe className="w-5 h-5 text-primary-forest" />
     }
   ];
 
@@ -73,10 +71,16 @@ export default function AboutUsPage() {
                   Câu Chuyện Sáng Lập ViNar
                 </Badge>
 
-                <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight"
+                >
                   Dấu Chân Trải Nghiệm. <br />
                   <span className="text-secondary-moss">Khát Vọng Dẫn Dắt.</span>
-                </h1>
+                </motion.h1>
 
                 <div className="text-base sm:text-lg text-on-surface-variant leading-relaxed space-y-4">
                   <p>
@@ -99,18 +103,38 @@ export default function AboutUsPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                <motion.div 
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={{
+                    hidden: {},
+                    show: {
+                      transition: { staggerChildren: 0.15 }
+                    }
+                  }}
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4"
+                >
                   {focusAreas.map((area, idx) => (
-                    <div key={idx} className="p-3 rounded-2xl bg-surface-container border border-surface-container-highest flex flex-col items-center justify-center text-center gap-2 transition-all hover:shadow-md hover:border-primary-forest/30 group cursor-default">
-                      <div className={`w-10 h-10 rounded-full ${area.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
+                    <motion.div 
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                      }}
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                      key={idx} 
+                      className="px-2 pt-4 pb-6 rounded-2xl bg-white border border-black/5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center text-center gap-3 transition-shadow hover:shadow-md hover:border-primary-forest/20 group cursor-pointer h-full"
+                    >
+                      <div className="w-11 h-11 rounded-full bg-primary-forest/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                         {area.icon}
                       </div>
-                      <div className="font-display font-bold text-deep-ink text-sm leading-tight">
+                      <div className="font-display font-bold text-deep-ink text-[13px] sm:text-[14px] leading-snug px-1">
                         {t(area.key)}
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </div>
 
               {/* Right Column: High-Impact Visuals */}
@@ -126,8 +150,12 @@ export default function AboutUsPage() {
                     priority
                   />
                 </div>
-                {/* Floating Secondary Image (Context) */}
-                <div className="absolute -bottom-6 -right-4 sm:-bottom-8 sm:-right-6 lg:-bottom-8 lg:-right-8 w-2/3 max-w-[280px] aspect-square rounded-[2rem] overflow-hidden shadow-3d-surface border-4 border-white z-20 hidden md:block">
+                {/* Floating Secondary Image (Context) with natural breathing motion */}
+                <motion.div 
+                  animate={{ y: [-7, 7, -7] }}
+                  transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+                  className="absolute -bottom-6 -right-4 sm:-bottom-8 sm:-right-6 lg:-bottom-8 lg:-right-8 w-2/3 max-w-[280px] aspect-square rounded-[2rem] overflow-hidden shadow-3d-surface border-4 border-white z-20 hidden md:block"
+                >
                   <Image
                     src="/images/aboutus/han_man.png"
                     alt="Nông dân Tây Nguyên đang ôm những mảng đất nứt nẻ do hạn mặn, ánh mắt lo âu nhưng đầy hi vọng khi cầm trên tay mầm cây xanh"
@@ -135,7 +163,7 @@ export default function AboutUsPage() {
                     sizes="33vw"
                     className="object-cover"
                   />
-                </div>
+                </motion.div>
               </div>
             </div>
           </Container>

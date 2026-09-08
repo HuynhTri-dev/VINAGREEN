@@ -29,6 +29,7 @@ import {
   TrendingDown,
   CheckCircle2,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ProductsPage() {
   // Interactive B2B Calculator State
@@ -72,45 +73,65 @@ export default function ProductsPage() {
 
             {/* Product Duos 3D Cards — Metric Focused */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-              <Pebble3D
-                variant="forest"
-                shape="egg"
-                title="AgriGel™ Viên Nén Giữ Ẩm Sinh Học"
-                metric="450× Ngậm Nước"
-                icon={<Droplets className="w-6 h-6 text-[#bbefc0]" />}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 220, damping: 20 }}
+                whileHover={{ y: -6, scale: 1.01 }}
+                className="h-full"
               >
-                <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    Giữ ẩm rễ 21 ngày
-                  </span>
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    0% Vi nhựa (Tự phân hủy)
-                  </span>
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    TRL 6 Kiểm định Lab
-                  </span>
-                </div>
-              </Pebble3D>
+                <Pebble3D
+                  variant="forest"
+                  shape="egg"
+                  title="AgriGel™ Viên Nén Giữ Ẩm Sinh Học"
+                  metric="450× Ngậm Nước"
+                  icon={<Droplets className="w-6 h-6 text-[#bbefc0]" />}
+                  className="h-full"
+                >
+                  <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      Giữ ẩm rễ 21 ngày
+                    </span>
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      0% Vi nhựa (Tự phân hủy)
+                    </span>
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      TRL 6 Kiểm định Lab
+                    </span>
+                  </div>
+                </Pebble3D>
+              </motion.div>
 
-              <Pebble3D
-                variant="timber"
-                shape="egg"
-                title="BioBandage™ Màng Bọc Rễ Kháng Mặn"
-                metric="Khóa Mặn >3‰"
-                icon={<ShieldAlert className="w-6 h-6 text-[#ffdcc6]" />}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 220, damping: 20, delay: 0.15 }}
+                whileHover={{ y: -6, scale: 1.01 }}
+                className="h-full"
               >
-                <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    Khóa 88.4% Ion Na⁺ &amp; Cl⁻
-                  </span>
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    Bảo vệ rễ tơ 90–120 ngày
-                  </span>
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
-                    Phù hợp ĐBSCL
-                  </span>
-                </div>
-              </Pebble3D>
+                <Pebble3D
+                  variant="timber"
+                  shape="egg"
+                  title="BioBandage™ Màng Bọc Rễ Kháng Mặn"
+                  metric="Khóa Mặn >3‰"
+                  icon={<ShieldAlert className="w-6 h-6 text-[#ffdcc6]" />}
+                  className="h-full"
+                >
+                  <div className="pt-4 flex flex-wrap gap-2.5 text-xs font-bold">
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      Khóa 88.4% Ion Na⁺ &amp; Cl⁻
+                    </span>
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      Bảo vệ rễ tơ 90–120 ngày
+                    </span>
+                    <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/20">
+                      Phù hợp ĐBSCL
+                    </span>
+                  </div>
+                </Pebble3D>
+              </motion.div>
             </div>
           </Container>
         </section>

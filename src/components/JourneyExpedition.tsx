@@ -140,6 +140,9 @@ export const JourneyExpedition: React.FC = () => {
                         "bg-secondary-moss text-white"
                     }`}
                 >
+                  {isVisible && (
+                    <span className="absolute inset-0 rounded-full animate-ping bg-current opacity-25 pointer-events-none" />
+                  )}
                   {step.icon}
                 </div>
 
