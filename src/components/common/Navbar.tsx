@@ -11,18 +11,19 @@ import { usePathname } from "next/navigation";
 import { Sprout, Menu, X, PhoneCall, Bot, Globe } from "lucide-react";
 import { Container, Button } from "@/design-system";
 import { ThemeToggle } from "./ThemeToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const NAV_ITEMS = [
-  { label: "Trang Chủ", href: "/" },
-  { label: "Sản Phẩm Chuyên Sâu", href: "/product" },
-  { label: "Về Chúng Tôi", href: "/about-us" },
-  { label: "Hành Trình Khởi Nghiệp", href: "/journey" },
+  { key: "nav.home", href: "/" },
+  { key: "nav.product", href: "/product" },
+  { key: "nav.about", href: "/about-us" },
+  { key: "nav.journey", href: "/journey" },
 ];
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [lang, setLang] = useState<"VI" | "EN">("VI");
+  const { lang, toggleLang, t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-surface-container-highest backdrop-glass-organic transition-colors">
@@ -52,11 +53,11 @@ export const Navbar: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   className={`text-sm font-semibold transition-all relative py-1 ${isActive
-                      ? "text-primary-forest dark:text-secondary-moss font-bold"
-                      : "text-on-surface-variant hover:text-primary-forest"
+                    ? "text-primary-forest dark:text-secondary-moss font-bold"
+                    : "text-on-surface-variant hover:text-primary-forest"
                     }`}
                 >
-                  {item.label}
+                  {t(item.key)}
                   {isActive && (
                     <span className="absolute bottom-0 inset-x-0 h-0.5 bg-secondary-moss rounded-full" />
                   )}
@@ -69,7 +70,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-3">
             {/* Language Switch */}
             <button
-              onClick={() => setLang(lang === "VI" ? "EN" : "VI")}
+              onClick={toggleLang}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-xs font-bold text-deep-ink border border-surface-container-highest transition-colors"
             >
               <Globe className="w-3.5 h-3.5 text-secondary-moss" />
@@ -110,18 +111,18 @@ export const Navbar: React.FC = () => {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors ${isActive
-                      ? "bg-primary-forest text-white"
-                      : "text-deep-ink hover:bg-surface-container"
+                    ? "bg-primary-forest text-white"
+                    : "text-deep-ink hover:bg-surface-container"
                     }`}
                 >
-                  {item.label}
+                  {t(item.key)}
                 </Link>
               );
             })}
 
             <div className="pt-3 border-t border-surface-container-highest flex items-center justify-between">
               <button
-                onClick={() => setLang(lang === "VI" ? "EN" : "VI")}
+                onClick={toggleLang}
                 className="flex items-center gap-2 text-xs font-bold text-primary-forest"
               >
                 <Globe className="w-4 h-4 text-secondary-moss" />

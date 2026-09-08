@@ -110,16 +110,16 @@ export const WePartnerWith: React.FC = () => {
         </div>
 
         {/* Partners Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {filteredPartners.map((partner) => (
             <div
               key={partner.id}
-              className={`h-full p-6 rounded-3xl border-2 shadow-3d-surface transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between group ${partner.isFeatured
-                ? "bg-surface-container-lowest border-secondary-moss shadow-lg"
+              className={`h-full p-6 rounded-3xl border-2 shadow-3d-surface transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col group ${partner.isFeatured
+                ? "bg-surface-container-lowest border-secondary-moss"
                 : "bg-surface-container-lowest border-surface-container-highest hover:border-secondary-moss/40"
                 }`}
             >
-              <div>
+              <div className="flex-1 flex flex-col">
                 {/* Category Icon & Featured Pill */}
                 <div className="flex items-center justify-between gap-2 mb-4">
                   {partner.logoUrl ? (
@@ -196,10 +196,10 @@ export const WePartnerWith: React.FC = () => {
           ))}
 
           {/* Invitation Card for New Strategic Partners */}
-          <div className="h-full p-6 rounded-3xl bg-primary-forest text-white shadow-3d-forest flex flex-col justify-between relative overflow-hidden group">
+          <div className="h-full p-6 rounded-3xl bg-primary-forest text-white shadow-3d-forest flex flex-col relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
-            <div>
+            <div className="flex-1 flex flex-col">
               <div className="w-10 h-10 rounded-xl bg-white/20 text-[#c1ee7c] flex items-center justify-center mb-4">
                 <Sparkles className="w-5 h-5" />
               </div>

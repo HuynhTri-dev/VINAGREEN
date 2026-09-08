@@ -44,51 +44,6 @@ const TRUSTED_ENTITIES: TrustedEntity[] = [
     logoPlaceholderText: "GREENHEART",
     isFeatured: true,
   },
-  {
-    id: "htx-cailay",
-    name: "HTX Sầu Riêng Cai Lậy",
-    location: "Tiền Giang",
-    cropType: "Sầu riêng xuất khẩu",
-    scale: "35 Hecta",
-    status: "Thử nghiệm 21 ngày hạn mặn",
-    logoPlaceholderText: "HTX CAI LẬY",
-  },
-  {
-    id: "nongtruong-chuprong",
-    name: "Nông Trường Cà Phê Chư Prông",
-    location: "Gia Lai",
-    cropType: "Cà phê Robusta & Arabica",
-    scale: "50 Hecta",
-    status: "Tiết kiệm 40% chi phí bơm tưới",
-    logoPlaceholderText: "CHƯ PRÔNG COFFEE",
-  },
-  {
-    id: "htx-bentre",
-    name: "HTX Bưởi Da Xanh Bến Tre",
-    location: "Bến Tre",
-    cropType: "Bưởi da xanh ruột hồng",
-    scale: "20 Hecta",
-    status: "Khóa 88% ion Na⁺ & Cl⁻",
-    logoPlaceholderText: "BƯỞI BẾN TRE",
-  },
-  {
-    id: "vuonuum-lamdong",
-    name: "Vườn Ươm Cây Giống Lâm Đồng",
-    location: "Đà Lạt, Lâm Đồng",
-    cropType: "Cây giống kỹ thuật cao",
-    scale: "100.000 Cây",
-    status: "Giảm 50% tỷ lệ hao hụt rễ",
-    logoPlaceholderText: "VƯỜN ƯƠM LÂM ĐỒNG",
-  },
-  {
-    id: "htx-daklak",
-    name: "HTX Nông Nghiệp Xanh Đắk Lắk",
-    location: "Đắk Lắk",
-    cropType: "Hạt tiêu & Cà phê",
-    scale: "40 Hecta",
-    status: "Đang nhân rộng 2025",
-    logoPlaceholderText: "AGRI ĐẮK LẮK",
-  },
 ];
 
 export const WeAreTrustedBy: React.FC = () => {
@@ -103,9 +58,9 @@ export const WeAreTrustedBy: React.FC = () => {
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-forest leading-tight">
             Được Tin Tưởng Bởi Hàng Trăm Hợp Tác Xã &amp; Dự Án Sinh Thái
           </h2>
-          <p className="text-base text-on-surface-variant leading-relaxed">
+          {/* <p className="text-base text-on-surface-variant leading-relaxed">
             Hơn 120+ Hecta vùng canh tác trọng điểm tại Tây Nguyên &amp; ĐBSCL cùng các dự án mô hình sinh thái lúa-tôm như GreenHeart đã ứng dụng và đồng hành cùng ViNar.
-          </p>
+          </p> */}
         </div>
 
         {/* Responsive Grid of Trusted Entities */}
@@ -113,11 +68,10 @@ export const WeAreTrustedBy: React.FC = () => {
           {TRUSTED_ENTITIES.map((entity) => (
             <div
               key={entity.id}
-              className={`p-6 rounded-3xl border shadow-3d-surface transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group flex flex-col justify-between ${
-                entity.isFeatured
-                  ? "bg-surface-container-lowest border-secondary-moss shadow-md"
-                  : "bg-surface-container-lowest border-surface-container-highest"
-              }`}
+              className={`p-6 rounded-3xl border shadow-3d-surface transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group flex flex-col justify-between ${entity.isFeatured
+                ? "bg-surface-container-lowest border-secondary-moss shadow-md"
+                : "bg-surface-container-lowest border-surface-container-highest"
+                }`}
             >
               <div>
                 {/* Logo Header */}
@@ -203,7 +157,7 @@ export const WeAreTrustedBy: React.FC = () => {
             </a>
           </div>
 
-          <div className="p-6 rounded-3xl bg-surface-container/50 border-2 border-dashed border-surface-container-highest flex flex-col items-center justify-center text-center space-y-3 min-h-[220px]">
+          {/* <div className="p-6 rounded-3xl bg-surface-container/50 border-2 border-dashed border-surface-container-highest flex flex-col items-center justify-center text-center space-y-3 min-h-[220px]">
             <div className="w-12 h-12 rounded-full bg-tertiary-timber/10 text-tertiary-timber flex items-center justify-center">
               <Clock className="w-6 h-6" />
             </div>
@@ -218,7 +172,7 @@ export const WeAreTrustedBy: React.FC = () => {
             <span className="text-[11px] font-mono font-bold text-outline px-3 py-1 rounded-full bg-surface-container">
               Cập nhật 2025
             </span>
-          </div>
+          </div> */}
         </div>
       </Container>
     </section>

@@ -6,6 +6,7 @@
 import type { Metadata } from "next";
 import { Epilogue, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
@@ -57,7 +58,9 @@ export default function RootLayout({
         className="min-h-screen flex flex-col bg-surface text-deep-ink antialiased font-sans"
         suppressHydrationWarning
       >
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

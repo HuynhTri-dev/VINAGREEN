@@ -19,7 +19,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Button } from "@/design-system";
-import { MarkdownRenderer } from "./MarkdownRenderer";
+import { MarkdownRenderer } from "../MarkdownRenderer";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -178,10 +178,10 @@ export const ChatbotWidget: React.FC = () => {
                     prev.map((msg) =>
                       msg.id === botMsgId
                         ? {
-                            ...msg,
-                            text: accumulatedText,
-                            ...checkDosageCard(accumulatedText),
-                          }
+                          ...msg,
+                          text: accumulatedText,
+                          ...checkDosageCard(accumulatedText),
+                        }
                         : msg
                     )
                   );
@@ -198,9 +198,9 @@ export const ChatbotWidget: React.FC = () => {
           prev.map((msg) =>
             msg.id === botMsgId
               ? {
-                  ...msg,
-                  text: "Dạ thưa bà con, kết nối mạng tạm thời bị gián đoạn. Bà con có thể gọi trực tiếp Tổng đài Kỹ thuật Nông học miễn cước 1800 6828 để gặp kỹ sư tư vấn ngay ạ!",
-                }
+                ...msg,
+                text: "Dạ thưa bà con, kết nối mạng tạm thời bị gián đoạn. Bà con có thể gọi trực tiếp Tổng đài Kỹ thuật Nông học miễn cước 1800 6828 để gặp kỹ sư tư vấn ngay ạ!",
+              }
               : msg
           )
         );
@@ -233,11 +233,10 @@ export const ChatbotWidget: React.FC = () => {
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Mở khung chat trợ lý nông vụ"
-          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${
-            isOpen
+          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer ${isOpen
               ? "bg-surface-container-high text-deep-ink shadow-md"
               : "bg-primary-forest text-white shadow-3d-forest hover:scale-110"
-          }`}
+            }`}
         >
           {isOpen ? (
             <X className="w-6 h-6" />
@@ -309,11 +308,10 @@ export const ChatbotWidget: React.FC = () => {
                 )}
 
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3.5 text-sm leading-relaxed shadow-sm ${
-                    msg.sender === "user"
+                  className={`max-w-[85%] rounded-2xl p-3.5 text-sm leading-relaxed shadow-sm ${msg.sender === "user"
                       ? "bg-primary-forest text-white rounded-tr-sm"
                       : "bg-surface-container-lowest text-deep-ink border border-surface-container-highest rounded-tl-sm"
-                  }`}
+                    }`}
                 >
                   {/* Markdown Renderer for AI and User text */}
                   {msg.sender === "bot" ? (

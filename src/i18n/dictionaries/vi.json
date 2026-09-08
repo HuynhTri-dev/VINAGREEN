@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "home": "Trang Chủ",
+    "product": "Sản Phẩm Chuyên Sâu",
+    "about": "Về Chúng Tôi",
+    "journey": "Hành Trình Khởi Nghiệp"
+  },
+  "about": {
+    "focus": {
+      "title": "Trọng Tâm Cốt Lõi",
+      "smart_agri": "Nông nghiệp thông minh & Tái tạo",
+      "medical": "Vật tư Y tế sinh học an toàn",
+      "waste": "Quản lý Rác thải & Bảo vệ Khí hậu"
+    }
+  }
+}

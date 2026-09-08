@@ -34,8 +34,28 @@ import {
   Heart,
   ShieldCheck,
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AboutUsPage() {
+  const { lang, t } = useLanguage();
+  const focusAreas = [
+    {
+      key: "about.focus.smart_agri",
+      icon: <Leaf className="w-5 h-5 text-primary-forest" />,
+      bg: "bg-primary-forest/20"
+    },
+    {
+      key: "about.focus.medical",
+      icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
+      bg: "bg-blue-600/20"
+    },
+    {
+      key: "about.focus.waste",
+      icon: <Globe className="w-5 h-5 text-secondary-moss" />,
+      bg: "bg-secondary-moss/20"
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-surface text-deep-ink">
       <Navbar />
@@ -50,54 +70,46 @@ export default function AboutUsPage() {
               {/* Left Column: Sharp, Punchy Text */}
               <div className="space-y-8">
                 <Badge variant="timber" size="md" icon={<Compass className="w-4 h-4" />}>
-                  Câu Chuyện ViNar
+                  Câu Chuyện Sáng Lập ViNar
                 </Badge>
 
                 <h1 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
-                  Dấu Chân Toàn Cầu. <br />
-                  <span className="text-secondary-moss">Khát Vọng Việt Nam.</span>
+                  Dấu Chân Trải Nghiệm. <br />
+                  <span className="text-secondary-moss">Khát Vọng Dẫn Dắt.</span>
                 </h1>
 
-                <div className="text-lg text-on-surface-variant leading-relaxed space-y-4">
+                <div className="text-base sm:text-lg text-on-surface-variant leading-relaxed space-y-4">
                   <p>
-                    Thấu hiểu sức mạnh của Nông nghiệp Thông minh từ quốc tế, chúng tôi trở về quê nhà<span className="hidden md:inline"> trước thực trạng trăn trở</span>:
+                    ViNar không bắt đầu trên bàn giấy, mà từ khát vọng của những người trẻ. Trải qua các chương trình ươm tạo tại Hàn, Nhật, Đài... chúng tôi xót xa khi nhìn về quê hương:
                   </p>
 
                   <ul className="space-y-2.5 text-deep-ink hidden md:block">
-                    <li className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-red-500/80 shrink-0" />
-                      Hàng triệu tấn phế phẩm nông nghiệp lãng phí.
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-red-500/80 shrink-0 mt-2" />
+                      <span>Phế phẩm nông nghiệp bị đốt bỏ gây ô nhiễm khói bụi.</span>
                     </li>
-                    <li className="flex items-center gap-3">
-                      <div className="w-2 h-2 rounded-full bg-orange-500/80 shrink-0" />
-                      Nông dân ĐBSCL &amp; Tây Nguyên kiệt quệ vì hạn mặn.
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full bg-orange-500/80 shrink-0 mt-2" />
+                      <span>Nông dân oằn mình chống chọi hạn mặn, đất bạc màu.</span>
                     </li>
                   </ul>
 
                   <p className="pt-1 font-bold text-primary-forest text-xl">
-                    Đó là động lực để ViNar ra đời.
+                    Gác lại thành tựu cá nhân, chúng tôi chọn kiến tạo mô hình kinh tế tuần hoàn mang lại tác động bền vững.
                   </p>
                 </div>
 
-                <div className="flex gap-4 pt-4">
-                  <div className="flex-1 p-5 rounded-2xl bg-surface-container border border-surface-container-highest flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary-forest/10 flex items-center justify-center shrink-0">
-                      <Globe className="w-6 h-6 text-primary-forest" />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                  {focusAreas.map((area, idx) => (
+                    <div key={idx} className="p-3 rounded-2xl bg-surface-container border border-surface-container-highest flex flex-col items-center justify-center text-center gap-2 transition-all hover:shadow-md hover:border-primary-forest/30 group cursor-default">
+                      <div className={`w-10 h-10 rounded-full ${area.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
+                        {area.icon}
+                      </div>
+                      <div className="font-display font-bold text-deep-ink text-sm leading-tight">
+                        {t(area.key)}
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xl font-display font-bold text-primary-forest">Học Hỏi</div>
-                      <div className="text-xs text-on-surface-variant">Tinh hoa công nghệ quốc tế</div>
-                    </div>
-                  </div>
-                  <div className="flex-1 p-5 rounded-2xl bg-surface-container border border-surface-container-highest flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-secondary-moss/10 flex items-center justify-center shrink-0">
-                      <Target className="w-6 h-6 text-secondary-moss" />
-                    </div>
-                    <div>
-                      <div className="text-xl font-display font-bold text-secondary-moss">Phụng Sự</div>
-                      <div className="text-xs text-on-surface-variant">Giải quyết nỗi đau quê nhà</div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -146,16 +158,17 @@ export default function AboutUsPage() {
           <Container className="relative z-10">
             <div className="max-w-4xl mx-auto space-y-8 text-white">
               <Quote className="w-16 h-16 text-secondary-moss/80 mx-auto" />
-              <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl leading-tight">
-                &quot;Chúng tôi không chờ đợi sự thay đổi. <br className="hidden md:block" />Chúng tôi kiến tạo thay đổi.&quot;
+              <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-bold tracking-widest uppercase shadow-lg mb-6">
+                Khát Vọng Của Thế Hệ Mới
+              </div>
+              <h2 className="font-display font-bold text-2xl sm:text-4xl lg:text-6xl leading-tight">
+                &quot;Chúng tôi không chờ đợi sự thay đổi, <br className="hidden md:block" />chúng tôi tự mình kiến tạo sự thay đổi.&quot;
               </h2>
-              <p className="text-lg sm:text-xl text-[#d1e5d3] max-w-2xl mx-auto font-medium leading-relaxed">
-                Mang lại sinh kế bền vững<span className="hidden md:inline"> cho cộng đồng yếu thế và đưa Việt Nam tiến nhanh hơn trên hành trình chạm đích <strong className="text-white">Net Zero 2050</strong></span>.
-              </p>
-              <div className="pt-6">
-                <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-bold tracking-widest uppercase shadow-lg">
-                  — Tuyên Ngôn Thế Hệ Trẻ ViNar
-                </span>
+              <div className="mt-8 bg-white/5 border border-white/10 backdrop-blur-md p-6 sm:p-8 rounded-2xl max-w-3xl mx-auto shadow-2xl relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <p className="text-lg sm:text-xl text-[#e2f0e4] font-medium leading-relaxed relative z-10">
+                  <strong className="text-white font-bold text-xl sm:text-2xl">ViNar</strong> chính là lời tuyên ngôn của thế hệ trẻ Việt Nam: tự mình kiến tạo sự thay đổi, mang lại sinh kế bền vững cho cộng đồng yếu thế và đưa Việt Nam tiến nhanh hơn trên hành trình chạm đích <strong className="text-[#bbefc0] font-bold text-xl sm:text-2xl drop-shadow-md">Net Zero 2050</strong>.
+                </p>
               </div>
             </div>
           </Container>
@@ -262,13 +275,13 @@ export default function AboutUsPage() {
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
               <div className="space-y-6">
-                <Badge variant="timber" size="md">Lợi Thế Cạnh Tranh</Badge>
+                <Badge variant="timber" size="md">Sức Mạnh Tuổi Trẻ</Badge>
                 <h2 className="font-display text-4xl sm:text-5xl font-bold text-primary-forest leading-tight">
                   Công Nghệ Là Công Cụ. <br />
-                  <span className="text-secondary-moss">Tâm Huyết Là Cốt Lõi.</span>
+                  <span className="text-secondary-moss">Khát Vọng Youth Là Cốt Lõi.</span>
                 </h2>
                 <p className="text-lg text-on-surface-variant">
-                  Sự khác biệt của ViNar nằm ở khát vọng phụng sự<span className="hidden md:inline"> của những người trẻ sát cánh cùng nông dân</span>.
+                  Sự khác biệt của ViNar nằm ở ngọn lửa đam mê và khát vọng cống hiến<span className="hidden md:inline"> của thế hệ trẻ (Youth) luôn sẵn sàng lấm bùn, sát cánh cùng nông dân</span>.
                 </p>
               </div>
               <div className="relative w-full aspect-[16/9] rounded-[2rem] overflow-hidden shadow-xl">

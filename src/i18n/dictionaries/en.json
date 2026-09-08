@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "home": "Home",
+    "product": "Specialized Products",
+    "about": "About Us",
+    "journey": "Startup Journey"
+  },
+  "about": {
+    "focus": {
+      "title": "Core Focus Areas",
+      "smart_agri": "Smart & Regenerative Agriculture",
+      "medical": "Safe Biological Medical Supplies",
+      "waste": "Waste Management & Climate Protection"
+    }
+  }
+}
