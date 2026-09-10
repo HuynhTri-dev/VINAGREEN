@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && opennextjs-cloudflare build --skipNextBuild",
+    "build": "next build",
     "build:cf": "opennextjs-cloudflare build",
     "deploy": "opennextjs-cloudflare build && wrangler deploy",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
