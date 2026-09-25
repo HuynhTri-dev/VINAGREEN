@@ -300,9 +300,9 @@ export default function HomePage() {
         <section className="py-20 bg-surface-container-low border-t border-surface-container-highest">
           <Container>
             <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-              <Badge 
-                variant="timber" 
-                size="md" 
+              <Badge
+                variant="timber"
+                size="md"
                 icon={
                   <motion.span
                     animate={{ rotate: 360 }}

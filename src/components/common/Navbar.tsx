@@ -7,10 +7,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Sprout, Menu, X, PhoneCall, Bot, Globe } from "lucide-react";
+import { Menu, X, PhoneCall, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Container, Button } from "@/design-system";
+import { Container } from "@/design-system";
 import { ThemeToggle } from "./ThemeToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -21,6 +22,11 @@ const NAV_ITEMS = [
   { key: "nav.journey", href: "/journey" },
 ];
 
+/**
+ * Global navigation component.
+ *
+ * @returns {React.ReactElement} The responsive navigation bar header.
+ */
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,8 +38,15 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-full bg-primary-forest text-white flex items-center justify-center shadow-3d-forest group-hover:scale-105 transition-transform">
-              <Sprout className="w-6 h-6 text-[#C1EE7C]" />
+            <div className="relative w-11 h-11 rounded-2xl overflow-hidden bg-[#f7f6ee] p-1 border border-surface-container-highest/80 shadow-3d-forest group-hover:scale-105 transition-all flex items-center justify-center">
+              <Image
+                src="/logos/vinar_logo_main.svg"
+                alt="ViNar Logo"
+                width={40}
+                height={40}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-extrabold text-2xl tracking-tight text-primary-forest leading-none">

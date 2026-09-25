@@ -5,9 +5,15 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sprout, PhoneCall, Mail, MapPin, ShieldCheck, Heart } from "lucide-react";
+import Image from "next/image";
+import { PhoneCall, Mail, MapPin, ShieldCheck, Heart } from "lucide-react";
 import { Container } from "@/design-system";
 
+/**
+ * Global footer component.
+ *
+ * @returns {React.ReactElement} The site footer with brand, credentials, and links.
+ */
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full bg-surface-container-low border-t border-surface-container-highest mt-auto pt-16 pb-12 transition-colors">
@@ -16,8 +22,14 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & Slogan */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary-forest text-white flex items-center justify-center shadow-md">
-                <Sprout className="w-5 h-5 text-[#C1EE7C]" />
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-[#f7f6ee] p-1 border border-surface-container-highest/80 shadow-md flex items-center justify-center">
+                <Image
+                  src="/logos/vinar_logo_main.svg"
+                  alt="ViNar Logo"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="font-display font-bold text-2xl text-primary-forest">
                 ViNar

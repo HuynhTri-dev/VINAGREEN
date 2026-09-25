@@ -35,6 +35,13 @@ export const metadata: Metadata = {
     "Net Zero 2050",
     "AI Farmer Agent",
   ],
+  icons: {
+    icon: [
+      { url: "/logos/vinar_logo_main.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/logos/vinar_logo_main.svg",
+    apple: "/logos/vinar_logo_main.svg",
+  },
 };
 
 export default function RootLayout({
@@ -49,6 +56,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="icon" href="/logos/vinar_logo_main.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/logos/vinar_logo_main.svg" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
